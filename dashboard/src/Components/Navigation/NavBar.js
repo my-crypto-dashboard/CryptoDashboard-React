@@ -11,7 +11,8 @@ const header = {
     alignItems: 'center',
     color: '#6049e6',
     zIndex: '2',
-    boxShadow: '0px 6px 10px gray'
+    boxShadow: '0px 6px 10px gray',
+    boxShadow: '.1px 2.1px 3.1px #6049e6'
     
 }
 const link ={
@@ -28,7 +29,7 @@ return (
     <div style={header}>
         <img src ={logo} alt="" style={{height:'60px'}}/>
         <NavLink style={link}
-            to = {'/'}
+            to = {'dashboard'}
             activeClassName="active-link">
             <span style={link}>Dashboard</span>
         </NavLink>
