@@ -38,12 +38,12 @@ return (
             <span style={link}>Favorites</span>
         </NavLink>
         <NavLink style={link}
-            to ='/wallets'
+            to ='wallets'
             activeClassName="active-link">
             <span style={link}>Wallets</span>
         </NavLink>
         <NavLink style={link}
-            to ='/about'
+            to ='about'
             activeClassName="active-link">
             <span style={link}>About</span>
         </NavLink>
