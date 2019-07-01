@@ -1,14 +1,22 @@
 import React from 'react';
 import './App.scss';
 import HeaderNav from './HeaderNav.js';
+import Dashboard from './Dashboard';
 
-function App() {
-  return (
+class App extends React.Component {
 
-    <div className="App">
-      <HeaderNav />
-    </div>
-  );
+  showCrypto(coin) {
+    console.dir(coin.value);
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <HeaderNav />
+        <Dashboard showCrypto={this.showCrypto} />
+      </div>
+    );
+  }
 }
 
 export default App;
