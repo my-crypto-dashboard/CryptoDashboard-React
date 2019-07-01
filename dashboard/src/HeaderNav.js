@@ -1,14 +1,15 @@
 import React from 'react';
+import logo from '../src/img/cryptdash-name.png'
 
 export default function HeaderNav() {
 
 
     return (
         <header className="App-header">
-            <img src="#" className="App-logo" alt="logo" />
-            <p>
+            <img src= {logo} className="App-logo" alt="logo" />
+            {/* <p>
                 <code>My Crypto Dashboard</code>
-            </p>
+            </p> */}
             <nav>
                 <a href='#'>Dashboard</a>
                 <a href='#'>Favorites</a>
