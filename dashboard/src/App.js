@@ -1,44 +1,98 @@
 import React, {Component} from 'react';
 import './App.scss';
 import HeaderNav from './HeaderNav.js';
-<<<<<<< HEAD
+import Dashboard from './Dashboard';
 import fire from './config/firebase';
+import firebase from 'firebase';
 
 class App extends Component {
 
-  consturctor() {
+  constructor() {
     super();
-    this.states = {
+    this.state = {
       user: null
     }
   }
 
+  componentDidMount() {
+    this.authListener();
+  }
 
-=======
-import Dashboard from './Dashboard';
+  authListener() {
+    let db = fire.firestore();
+      fire.auth().onAuthStateChanged((user) => {
+        if(user) {
+          db
+          .collection("users")
+          .doc(user.uid)
+          .get().then(docSnapshot => {
+            this.setState({user: docSnapshot.data()});
+          })
+        
+      } else {
+        this.setState({user:null});
+      }
+    });
+  }
 
-class App extends React.Component {
+  login() {
+    var provider = new firebase.auth.GoogleAuthProvider();
+    let db = fire.firestore();
+    return fire.auth()
+    .signInWithPopup(provider)
+    .then(async result => {
+      console.log(result);
+      await db
+      .collection("users")
+      .doc(result.user.uid)
+      .get().then(docSnapshot => {
+        if(!docSnapshot.data()){
+            db.collection("users")
+            .doc(result.user.uid)
+            .set({
+              email: result.user.email,
+              id: result.user.uid,
+              favorites: []
+            });
+            this.setState({user: {
+              email: result.user.email,
+              id: result.user.uid,
+              favorites: []
+            }});
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }
 
+  logout() {
+    fire.auth().signOut()
+    .then(res => {
+      console.log(res);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }
+  
   showCrypto(coin) {
     console.dir(coin.value);
   }
 
->>>>>>> 71ef6cba009da1f13d6e3e7ec99abd46a8aeba18
   render() {
     return (
       <div className="App">
-        <HeaderNav />
-<<<<<<< HEAD
-      </div>
-    );
-  }
-  
-=======
+        <HeaderNav user={this.state.user} login={this.login} logout={this.logout}/>
         <Dashboard showCrypto={this.showCrypto} />
       </div>
     );
   }
->>>>>>> 71ef6cba009da1f13d6e3e7ec99abd46a8aeba18
+  
 }
 
 export default App;
