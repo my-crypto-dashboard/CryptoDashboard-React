@@ -1,8 +1,8 @@
 import React from 'react';
 
-export default function HeaderNav() {
+export default function HeaderNav(props) {
 
-
+  
     return (
         <header className="App-header">
             <img src="#" className="App-logo" alt="logo" />
@@ -14,7 +14,11 @@ export default function HeaderNav() {
                 <a href='#'>Favorites</a>
                 <a href='#'>Wallets</a>
                 <a href='#'>About</a>
-                <a href='#'>Logout</a>
+                {props.user ? 
+                <button onClick={() => {props.logout()}}>Logout</button>
+                :
+                <button onClick={() => {props.login()}}>Login</button>
+                }
             </nav>
         </header>
     )
