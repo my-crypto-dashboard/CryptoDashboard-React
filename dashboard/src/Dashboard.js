@@ -178,6 +178,13 @@ class Dashboard extends React.Component {
                         <input name="cryptoTicker" placeholder="Crypto Ticker Symbol" />
                     </form>
 
+                    {(this.state.leftcoin && this.state.rightcoin && this.state.cryptoPair) && (
+                        <div className="middleData">
+                            <div>{this.state.leftcoin.symbol} / {this.state.rightcoin.symbol}</div>
+                            <div> {this.state.cryptoPair[this.state.leftcoin.id][this.state.rightcoin.symbol]}</div>
+                        </div>
+                    )}
+
                     <form name='right-form' onSubmit={(e) => {
                         e.preventDefault();
                         this.cryptoSearch(e.target[0], e.target);
@@ -188,23 +195,19 @@ class Dashboard extends React.Component {
 
                 <main>
                     <div className="data">
-                        {this.state.leftcoinUSD && (<div>
-                            <div>{Object.keys(this.state.leftcoinUSD)[0]}</div>
-                            <div>${Object.values(this.state.leftcoinUSD)[0]['usd']} usd</div>
-                            <div>  </div>
-                        </div>)}
+                        {this.state.leftcoinUSD && (
+                            <div className="leftData">
+                                <div>{Object.keys(this.state.leftcoinUSD)[0]}</div>
+                                <div>${Object.values(this.state.leftcoinUSD)[0]['usd']} usd</div>
+                                <div>  </div>
+                            </div>)}
 
-                        {(this.state.leftcoin && this.state.rightcoin && this.state.cryptoPair) && (
-                            <div>
-                                <div>{this.state.leftcoin.symbol} / {this.state.rightcoin.symbol}</div>
-                                <div> {this.state.cryptoPair[this.state.leftcoin.id][this.state.rightcoin.symbol]}</div>
-                            </div>
-                        )}
+
 
                         {/* <div>{this.state.cryptoPair[this.state.leftcoin.id][this.state.rightcoin.symbol]}</div> */}
 
                         {this.state.rightcoinUSD && (
-                            <div>
+                            <div className="rightData">
                                 <div>{Object.keys(this.state.rightcoinUSD)[0]}</div>
                                 <div>${Object.values(this.state.rightcoinUSD)[0]['usd']} usd</div>
                             </div>)}
