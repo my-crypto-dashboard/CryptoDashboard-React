@@ -6,7 +6,8 @@ import Favorites from './Components/Favorites/Favorites'
 import About from './Components/About/About'
 import Wallets from './Components/Wallets/Wallets'
 import Dashboard from './Components/Dashboard/Dashboard'
-import Footer from './Components/Footer/Footer'
+// import Footer from './Components/Footer/Footer'
+
 
 
 function App() {
@@ -14,9 +15,9 @@ function App() {
        
     <div className="App">
     <NavBar/>
-      <Route exact path="/dashboard" render={ (props) => {
+      {/* <Route exact path="/dashboard" render={ (props) => {
           return(<Dashboard {...props} />)
-        }} />
+        }} /> */}
       
       <Route exact path="/favorites" render={ (props) => {
           return(<Favorites {...props} />)
