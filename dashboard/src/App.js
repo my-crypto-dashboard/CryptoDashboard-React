@@ -8,6 +8,7 @@ import Wallets from './Components/Wallets/Wallets'
 import Dashboard from './Components/Dashboard/Dashboard'
 import fire from './config/firebase';
 import firebase from 'firebase';
+import Chart from './Components/Charts/chart';
 // import Footer from './Components/Footer/Footer'
 
 
@@ -94,6 +95,7 @@ class App extends Component {
     return (
        
       <div className="App">
+        <Chart/>
       <NavBar user={this.state.user} login={this.login} logout={this.logout}/>
         <Route exact path="/dashboard" render={ (props) => {
             return(<Dashboard {...props} showCrypto={this.showCrypto} />)
