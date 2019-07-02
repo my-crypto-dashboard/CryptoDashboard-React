@@ -41,7 +41,7 @@ return (
             to ='/favorites'
             activeStyle={{
                 borderTop: '1px solid #6049e6', borderBottom: '1px solid #6049e6'}}>
-            <span className={'link'}>Favorites</span>
+            <span style={link}>Favorites</span>
         </NavLink>
         <NavLink style={link}
             to ='/wallets'
