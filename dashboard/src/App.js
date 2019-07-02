@@ -41,7 +41,6 @@ class App extends Component {
     return fire.auth()
     .signInWithPopup(provider)
     .then(async result => {
-      console.log(result);
       await db
       .collection("users")
       .doc(result.user.uid)
