@@ -14,6 +14,7 @@ class Dashboard extends React.Component {
             coins: [],
             cryptoPair: null
         }
+        this.baseState = this.state;
     }
 
     componentDidMount() {
@@ -24,23 +25,31 @@ class Dashboard extends React.Component {
             .catch(err => console.log(err))
     }
 
+    componentWillUnmount() {
+        this.setState(this.baseState);
+    }
+
     displayCryptoLeft = coin => {
         console.log('displayCryptoLeft triggered');
-        this.setState({ leftcoin: coin });  //why does setting state not work here, but it works inside the axios call?
-        console.log(this.state);
+        this.setState({ leftcoin: null });  //why does setting state not work here, but it works inside the axios call?
 
-        axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${coin.id}&vs_currencies=usd`)
-            .then(res => {
-                this.setState({
-                    leftcoinUSD: res.data,
-                    leftcoin: coin
+        if (coin) {
+
+            axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${coin.id}&vs_currencies=usd`)
+                .then(res => {
+                    this.setState({
+                        leftcoinUSD: res.data,
+                        leftcoin: coin
+                    })
                 })
-            })
-            .catch(err => console.log(err));
+                .catch(err => console.log(err));
+
+        }
+
 
         // if (this.state.rightcoin && this.state.leftcoin) {
-
         // }
+
         if (this.state.rightcoin) {
             this.showCryptoPair(coin, this.state.rightcoin);
         }
@@ -50,7 +59,7 @@ class Dashboard extends React.Component {
     displayCryptoRight = (coin) => {
         console.log('displayCryptoRight triggered');
         console.log('right coin', coin);
-        this.setState({ rightcoin: coin });
+        this.setState({ rightcoin: null });
         console.log(this.state);
 
         axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${coin.id}&vs_currencies=usd`)
@@ -62,6 +71,8 @@ class Dashboard extends React.Component {
         // if (this.state.leftcoin && this.state.rightcoin) {
         //     this.showCryptoPair(coin, this.state.leftcoin);
         // }
+
+        console.log('leftcoin and rightcoin in displayCryptoRight', this.state.leftcoin, coin);
 
         if (this.state.leftcoin) {
             this.showCryptoPair(this.state.leftcoin, coin);
@@ -80,6 +91,9 @@ class Dashboard extends React.Component {
         const leftCoinFound = this.state.coins.filter(coin => coin.symbol === leftCoinInput)[0];
         const rightCoinFound = this.state.coins.filter(coin => coin.symbol === rightCoinInput)[0];
 
+        console.log('leftCoinFound', leftCoinFound);
+        console.log('rightCoinFound', rightCoinFound);
+
         if (leftCoinFound) {
             this.setState({ leftcoin: leftCoinFound })
             this.displayCryptoLeft(leftCoinFound);
@@ -94,10 +108,9 @@ class Dashboard extends React.Component {
         //     this.showCryptoPair(leftCoinFound, rightCoinFound);
         // }
 
-        this.showCryptoPair(leftCoinFound, rightCoinFound);
-
-        console.log('leftCoinFound', leftCoinFound);
-        console.log('rightCoinFound', rightCoinFound);
+        if (leftCoinFound && rightCoinFound) {
+            this.showCryptoPair(leftCoinFound, rightCoinFound);
+        }
     }
 
     //     if (leftCoinFound) {
@@ -140,18 +153,14 @@ class Dashboard extends React.Component {
 
         axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${leftcoin.id}&vs_currencies=${rightcoin.symbol}`)
             .then(res => {
-                console.log(res.data);
-                this.setState({ cryptoPair: res.data })
+                console.log('axios response data for cryptoPair', res.data);
+                this.setState({ cryptoPair: res.data });
+
             })
             .catch(err => console.log(err));
     }
 
-
     render() {
-        console.log('this.state.rightcoin', this.state.rightcoin);
-        console.log('this.state.leftcoin', this.state.leftcoin);
-        console.log('this.state.cryptoPair', this.state.cryptoPair);
-
         return (
             <>
                 {/* <Wheel /> */}
@@ -185,13 +194,14 @@ class Dashboard extends React.Component {
                             <div>  </div>
                         </div>)}
 
-                        {(this.state.leftcoin && this.state.rightcoin) && (
+                        {(this.state.leftcoin && this.state.rightcoin && this.state.cryptoPair) && (
                             <div>
                                 <div>{this.state.leftcoin.symbol} / {this.state.rightcoin.symbol}</div>
-                                {/* <div> {this.state.cryptoPair[this.state.leftcoin.id][this.state.rightcoin.symbol]}</div> */}
-                                <div></div>
+                                <div> {this.state.cryptoPair[this.state.leftcoin.id][this.state.rightcoin.symbol]}</div>
                             </div>
                         )}
+
+                        {/* <div>{this.state.cryptoPair[this.state.leftcoin.id][this.state.rightcoin.symbol]}</div> */}
 
                         {this.state.rightcoinUSD && (
                             <div>
