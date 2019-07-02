@@ -15,9 +15,9 @@ function App() {
        
     <div className="App">
     <NavBar/>
-      {/* <Route exact path="/dashboard" render={ (props) => {
+      <Route exact path="/dashboard" render={ (props) => {
           return(<Dashboard {...props} />)
-        }} /> */}
+        }} />
       
       <Route exact path="/favorites" render={ (props) => {
           return(<Favorites {...props} />)
