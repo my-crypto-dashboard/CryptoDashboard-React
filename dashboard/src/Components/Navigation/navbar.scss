@@ -1,3 +1,15 @@
 .active-link {
     color: 'red'
 }
+
+.link {
+    color: '#57b7bd';
+    padding: '2px';
+    padding-bottom: '4px';
+    text-decoration: 'none';
+
+    &:hover {
+        font-size: 16px;
+    }
+     
+}

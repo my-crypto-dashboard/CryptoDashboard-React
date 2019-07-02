@@ -21,7 +21,7 @@ const link ={
     padding: '2px',
     paddingBottom: '4px',
     textDecoration: 'none'
-    
+     
 }
 
 
@@ -41,7 +41,7 @@ return (
             to ='/favorites'
             activeStyle={{
                 borderTop: '1px solid #6049e6', borderBottom: '1px solid #6049e6'}}>
-            <span style={link}>Favorites</span>
+            <span className={'link'}>Favorites</span>
         </NavLink>
         <NavLink style={link}
             to ='/wallets'
@@ -52,7 +52,7 @@ return (
         <NavLink style={link}
             to ='/about'
             activeStyle={{
-                borderTop: '1px solid #6049e6', borderBottom: '1px solid #6049e6'}}>
+                borderTop: '1px solid #6049e6', borderBottom: '1px solid #6049e6' }}>
             <span style={link}>About</span>
         </NavLink>
         <NavLink style={link}
