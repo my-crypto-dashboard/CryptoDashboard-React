@@ -6,27 +6,88 @@ import axios from 'axios';
 const Chart = props => {
 
   useEffect(() => {
-    axios.get(`https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=${30}`)
+    axios.get(`https://api.coingecko.com/api/v3/coins//market_chart?vs_currency=usd&days=${30}`)
     .then(res => {
         let priceData = res.data.prices;
-        let HEIGHT = 400;
-        let WIDTH = 400;
-        console.log(priceData);
+        let marketCapData = res.data.market_caps;
+        let volumeData = res.data.total_volumes;
+        let svgHeight = 400;
+        let svgWidth = 800;
+        let margin = {top: 20, right: 20, bottom: 30, left: 150}
+        let width = svgWidth - margin.left - margin.right;
+        let height = svgHeight - margin.top - margin.bottom;
+
+        let svg = d3.select('body').append('svg')
+            .attr('width', svgWidth)
+            .attr('height', svgHeight);
+
+        let g = svg.append('g').attr('transform', `translate(${margin.left}, ${margin.top})`);
+
+
+        // Date/Price data for prices
         let minDate = priceData[0][0];
         let maxDate = priceData[priceData.length -1][0];
-        let maxPrice = d3.max(priceData, function(d) { return d[1]})
+        let minPrice = d3.min(priceData, function(d) { return d[1]});
+        let maxPrice = d3.max(priceData, function(d) { return d[1]});
         
-        let y = d3.scaleLinear().domain([0, maxPrice]).range([HEIGHT, 0]);
-        let x = d3.scaleTime().domain([minDate, maxDate]).range([0, WIDTH]);
+        let y = d3.scaleLinear().rangeRound([height, 0]);
+        let x = d3.scaleTime().rangeRound([0, width]);  
+        
+        let y2 = d3.scaleLinear().rangeRound([height, 0]);
 
-        let yAxis = d3.axisLeft(y);
-        let xAxis = d3.axisBottom(x);
-        let svg = d3.select('body').append('svg').attr('height', '100%').attr('width', '100%');
-        let charGroup = svg.append('g').attr('transform', 'translate(50, 50)');
         let line = d3.line().x(function(d) {return x(d[0])}).y(function(d) { return y(d[1])})
-        charGroup.append('path').attr('d', line(priceData));
-        charGroup.append('g').attr('class', 'x axis').call(xAxis);
-        charGroup.append('g').attr('class', 'y axis').call(yAxis);
+                            x.domain([minDate, maxDate])
+                            y.domain([minPrice, maxPrice]);
+
+        let marketCapLine = d3.line().x(function(d) {return x(d[0])}).y(function(d) {return y2(d[1])})
+                            y2.domain(d3.extent(marketCapData, function(d) { return d[1]}));
+
+
+        g.append('g')
+            .attr('transform', `translate(0, ${height})`)
+            .call(d3.axisBottom(x))
+            .select('.domain')
+            .remove();
+
+        g.append('g')
+            .call(d3.axisLeft(y2))
+            .append('text')
+            .attr('fill', '#000')
+            .attr('transform', 'rotate(-90')
+            .attr('y', 6)
+            .attr('dy', '0.71em')
+            .attr('text-anchor', 'end')
+            .text('Martket Cap');
+
+        g.append('g')
+            .attr('transform', `translate(${width}, 0)`)
+            .call(d3.axisRight(y))
+            .append('text')
+            .attr('fill', '#000')
+            .attr('transform', 'rotate(-90')
+            .attr('y', 6)
+            .attr('dy', '0.71em')
+            .attr('text-anchor', 'end')
+            .text('Price ($)');
+
+        g.append('path')
+        .datum(priceData)
+        .attr('fill', 'none')
+        .attr('stroke', 'green')
+        .attr('stroke-linjoin', 'round')
+        .attr('stroke-linecap', 'round')
+        .attr('stroke-width', 1.5)
+        .attr('d', line);
+
+        g.append('path')
+        .datum(marketCapData)
+        .attr('fill', 'none')
+        .attr('stroke', 'blue')
+        .attr('stroke-linjoin', 'round')
+        .attr('stroke-linecap', 'round')
+        .attr('stroke-width', 1.5)
+        .attr('d', marketCapLine);
+
     })
     .catch(err => {
         console.log(err);
