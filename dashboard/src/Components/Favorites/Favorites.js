@@ -22,7 +22,7 @@ class Favorites extends Component {
         .get("https://api.coingecko.com/api/v3/simple/price?ids=01coin%2C02-token%2CbitBTC%2Cdomocoin%2Cether-1%2Cests%2Ceternity%2C4new&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true")
         .then (response => {
            
-            this.setState(() => ({ favorites: [response.data] }));
+            // this.setState(() => ({ favorites: [response.data] }));
             console.log('state', this.state.favorites[0])
             
           })
