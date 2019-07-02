@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import FavoriteCard from './FavoriteCard'
 import axios from 'axios'
+import Chart from '../Charts/Charts'
 import '../components.scss'
 
 
@@ -55,7 +56,8 @@ class Favorites extends Component {
               price = {favorite.newValue.usd}
               mCap =  {favorite.newValue.usd_market_cap}
               change ={favorite.newValue.usd_24h_change}
-              />
+              >
+              </FavoriteCard>
             )             
               
           })};

@@ -101,7 +101,7 @@ class App extends Component {
           }} />
         
         <Route exact path="/favorites" render={ (props) => {
-            return(<Favorites {...props}  ids={['bitcoin','ethereum','abcc-token','bitBTC','acepay',"aliencoin"]} />)
+            return(<Favorites {...props}  ids={['bitcoin','ethereum','bitBTC']} />)
           }} />
         <Route exact path="/about" render={ (props) => {
             return(<About {...props} />)

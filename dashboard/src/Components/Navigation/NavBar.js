@@ -25,7 +25,7 @@ const link ={
 }
 
 
-const NavBar = () => {
+const NavBar = (props) => {
 
 return (
 
@@ -41,7 +41,7 @@ return (
             to ='/favorites'
             activeStyle={{
                 borderTop: '1px solid #6049e6', borderBottom: '1px solid #6049e6'}}>
-            <span style={link}>Favorites</span>
+            <span className={'link'}>Favorites</span>
         </NavLink>
         <NavLink style={link}
             to ='/wallets'
@@ -55,12 +55,13 @@ return (
                 borderTop: '1px solid #6049e6', borderBottom: '1px solid #6049e6' }}>
             <span style={link}>About</span>
         </NavLink>
-        <NavLink style={link}
-            to ='/'
-            activeClassName="active-link">
-            <span style={link}>Logout</span>
-        </NavLink>
-
+        {
+            props.user ? 
+            <button onClick={() => {props.logout()}}>Logout</button>
+            :
+            <button onClick={() => {props.login()}}>Login</button>
+            
+        }
         
     </div>
 )
