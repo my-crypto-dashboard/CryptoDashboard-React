@@ -10,21 +10,25 @@ class Favorites extends Component {
     constructor(props) {
       super(props);
       this.state = {
-       favorites: [1,2,3,4,5,6,7,8]
+       ids: [props.ids],
+       favorites: []
       };
 }
 
 
-    
+   
 
     componentDidMount(){
+        let ids = this.state.ids
         axios
-        .get("https://api.coingecko.com/api/v3/simple/price?ids=01coin%2C02-token%2CbitBTC%2Cdomocoin%2Cether-1%2Cests%2Ceternity%2C4new&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true")
+        .get(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true`)
         .then (response => {
-           
-            // this.setState(() => ({ favorites: [response.data] }));
-            console.log('state', this.state.favorites[0])
-            
+         let value =  Object.entries(response.data).map(([key, value]) => {
+            return value
+          })
+            this.setState({
+                favorites: value});
+                console.log('state', value)
           })
         .catch(err => {
             console.log(err);
@@ -38,14 +42,19 @@ class Favorites extends Component {
         <div >
 
           <div>
-                
-          {this.state.favorites.map(fav => { 
-            return (                
+          {this.state.favorites.map(favorite => {   
+            return (
               <FavoriteCard 
-              price = {fav.usd}/>
+              key = {favorite.index}
+              price = {favorite.usd}
+              mCap = {favorite.usd_market_cap}
+              change = {favorite.usd_24h_change}
+              />
+            )             
+              
+          })};
             
-            );
-          })}
+       
                 
             </div>
             </div>
