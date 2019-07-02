@@ -1,6 +1,7 @@
 import React from 'react'
 import {NavLink} from 'react-router-dom'
 import logo from '../Assets/cryptdash-name.png'
+import './navbar.scss'
 
 
 const header = {
@@ -17,6 +18,8 @@ const header = {
 }
 const link ={
     color: '#57b7bd',
+    padding: '2px',
+    paddingBottom: '4px',
     textDecoration: 'none'
     
 }
@@ -29,23 +32,27 @@ return (
     <div style={header}>
         <img src ={logo} alt="" style={{height:'60px'}}/>
         <NavLink style={link}
-            to = {'dashboard'}
-            activeClassName="active-link">
+            to = {'/dashboard'}
+            activeStyle={{
+                borderTop: '1px solid #6049e6', borderBottom: '1px solid #6049e6'}}>
             <span style={link}>Dashboard</span>
         </NavLink>
         <NavLink style={link}
-            to ='favorites'
-            activeClassName="active-link">
+            to ='/favorites'
+            activeStyle={{
+                borderTop: '1px solid #6049e6', borderBottom: '1px solid #6049e6'}}>
             <span style={link}>Favorites</span>
         </NavLink>
         <NavLink style={link}
-            to ='wallets'
-            activeClassName="active-link">
+            to ='/wallets'
+            activeStyle={{
+                borderTop: '1px solid #6049e6', borderBottom: '1px solid #6049e6'}}>
             <span style={link}>Wallets</span>
         </NavLink>
         <NavLink style={link}
-            to ='about'
-            activeClassName="active-link">
+            to ='/about'
+            activeStyle={{
+                borderTop: '1px solid #6049e6', borderBottom: '1px solid #6049e6'}}>
             <span style={link}>About</span>
         </NavLink>
         <NavLink style={link}

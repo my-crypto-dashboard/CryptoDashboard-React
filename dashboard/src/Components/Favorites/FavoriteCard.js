@@ -9,7 +9,10 @@ const FavoriteCard = props => {
   return (
       
     <div className={'card-1'}>  
-      <h4>{props.usd}</h4>
+      <h2>{props.name}</h2>
+      <h4>{props.price}</h4>
+      <h4>{props.mCap}</h4>
+      <h5>{props.change}</h5>
     </div>
   );
 };
