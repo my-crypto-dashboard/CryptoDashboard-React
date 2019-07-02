@@ -1,9 +1,16 @@
 import React, {Component} from 'react';
 import './App.scss';
-import HeaderNav from './HeaderNav.js';
-import Dashboard from './Dashboard';
+import NavBar from './Components/Navigation/NavBar'
+import { Route } from 'react-router-dom'
+import Favorites from './Components/Favorites/Favorites'
+import About from './Components/About/About'
+import Wallets from './Components/Wallets/Wallets'
+import Dashboard from './Components/Dashboard/Dashboard'
 import fire from './config/firebase';
 import firebase from 'firebase';
+// import Footer from './Components/Footer/Footer'
+
+
 
 class App extends Component {
 
@@ -83,16 +90,35 @@ class App extends Component {
   showCrypto(coin) {
     console.dir(coin.value);
   }
+  render(){
 
-  render() {
     return (
+       
       <div className="App">
-        <HeaderNav user={this.state.user} login={this.login} logout={this.logout}/>
-        <Dashboard showCrypto={this.showCrypto} />
+      <NavBar user={this.state.user} login={this.login} logout={this.logout}/>
+        <Route exact path="/dashboard" render={ (props) => {
+            return(<Dashboard {...props} showCrypto={this.showCrypto} />)
+          }} />
+        
+        <Route exact path="/favorites" render={ (props) => {
+            return(<Favorites {...props} />)
+          }} />
+        <Route exact path="/about" render={ (props) => {
+            return(<About {...props} />)
+          }} />
+          <Route exact path="/wallets" render={ (props) => {
+            return(<Wallets {...props} />)
+          }} />
+        
       </div>
+      
+      
     );
+
   }
+
   
+ 
 }
 
 export default App;
