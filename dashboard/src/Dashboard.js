@@ -1,7 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 import './Dashboard.scss';
-
+// import Spin from './Spin';
+// import Wheel from './Wheel';
+// console.log(Wheel);
 
 class Dashboard extends React.Component {
 
@@ -21,14 +23,24 @@ class Dashboard extends React.Component {
             .catch(err => console.log(err))
     }
 
-    showCrypto = coin => {
-        // console.log(coin.id);
-        axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${coin.id}&vs_currencies=usd`)
+    showCryptoPair = (leftcoin, rightcoin) => {
+        console.log('showcryptopair fired', leftcoin, rightcoin);
+        console.log('cryptoLeft ', this.state.cryptoLeft);
+        console.log('cryptoRight ', this.state.cryptoRight);
+
+        let leftcoinID = Object.keys(this.state.cryptoLeft)[0];
+        this.setState({ leftcoinID });
+        console.log(leftcoinID);
+
+        axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${leftcoinID}&vs_currencies=${rightcoin}`)
             .then(res => {
                 console.log(res.data);
                 this.setState({ crypto: res.data })
             })
             .catch(err => console.log(err));
+
+
+
     }
 
 
@@ -53,6 +65,14 @@ class Dashboard extends React.Component {
     cryptoSearch(crypto, form) {
         console.log('cryptosearch triggered');
 
+        const forms = document.querySelectorAll('form');
+        let rightcoin = forms[1].children[0].value;
+        let leftcoin = forms[0].children[0].value;
+        console.dir(forms[0].children[0].value);
+        if (leftcoin && rightcoin) {
+            this.showCryptoPair(leftcoin, rightcoin);
+        }
+        // forms.forEach( form => form.)
         if (form.name === 'left-form') {
             const cryptoResult1 = this.state.coins.filter(coin => coin.symbol === crypto.value);
             this.setState({ cryptoResult1 });
@@ -73,8 +93,21 @@ class Dashboard extends React.Component {
     }
 
     render() {
+        if (this.state.crypto) {
+            let coin = Object.keys(this.state.crypto)[0];
+
+            console.log(coin);
+        }
+
         return (
             <>
+                {/* <Wheel /> */}
+                {/* <canvas id='myCanvas' width='880' height='300'>
+                    {Wheel}
+                </canvas> */}
+
+                {/* <div>{Spin}</div> */}
+                {/* <Spin /> */}
                 <div className='forms'>
                     <form name='left-form' onSubmit={(e) => {
                         e.preventDefault();
@@ -98,15 +131,19 @@ class Dashboard extends React.Component {
                             <div>${Object.values(this.state.cryptoLeft)[0]['usd']} usd</div>
                         </div>)}
 
-                        {this.state.crypto && (<div>
-                            <div>{Object.keys(this.state.crypto)[0]}</div>
-                            <div>${Object.values(this.state.crypto)[0]['usd']} usd</div>
-                        </div>)}
+                        {this.state.crypto && (
+                            < div >
+                                <div>{Object.keys(this.state.crypto)[0]}</div>
+                                <div>{this.state.cryptoResult1[0].symbol}/{this.state.cryptoResult2[0].symbol}</div>
+                                <div>{this.state.crypto[this.state.leftcoinID][this.state.cryptoResult2[0].symbol]}</div>
+                            </div>
+                        )}
 
-                        {this.state.cryptoRight && (<div>
-                            <div>{Object.keys(this.state.cryptoRight)[0]}</div>
-                            <div>${Object.values(this.state.cryptoRight)[0]['usd']} usd</div>
-                        </div>)}
+                        {this.state.cryptoRight && (
+                            <div>
+                                <div>{Object.keys(this.state.cryptoRight)[0]}</div>
+                                <div>${Object.values(this.state.cryptoRight)[0]['usd']} usd</div>
+                            </div>)}
                     </div>
                     <div className='coins'>
                         <div className='leftCoins'>
