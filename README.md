@@ -17,14 +17,13 @@
 ![Firebase](https://img.shields.io/badge/-Firebase-grey.svg)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/b5c4db1c-b10d-42c3-b157-3746edd9e81d/deploy-status)](https://goofy-sinoussi-c017bd.netlify.com)
 ![version](https://img.shields.io/badge/Version-1.0.0-red.svg)
-![version](https://img.shields.io/badge/Version-1.0.0-red.svg)
 
 ## Overview
 
 Cryptdash provides real-time updates for all the market prices. The market prices can be paired off with your choice and make a list of prices according to your favorite cryptocurrency and exchanges to uphold the quality to the users. Cryptdash allows you to add multiple wallets and view current assets that the user is holding. 
 *(future security issue to solve for integrating wallets)
 
-You can find the project at https://www.netlify.com
+You can find the project at https://cryptdash.netlify.com/
 
 ### Key Features
 
@@ -64,7 +63,7 @@ In order for the app to function correctly, the user must set up their own envir
 
     * HIDDEN *
     
- Additionally, in the root of the Backend directory, create a .env file with the text below:
+ Additionally, outside the root of the .src directory, create a .env file with the text below:
 
 # Contributing
 
@@ -84,4 +83,4 @@ If you have developed a patch, bug fix, or new feature that would improve this a
 2. Update the README.md with details of your code.
 3. Submit a pull request with your changes after carefully reviewing and testing your code.
 ##
-### Backend documentation can be found here: [Backend](https://github.com/labs12-chores-1/labs12-chores-1-BE)
+### Documentation can be found here: (https://github.com/my-crypto-dashboard/CryptoDashboard-React)
