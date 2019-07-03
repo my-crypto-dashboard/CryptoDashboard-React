@@ -1,5 +1,8 @@
 $react-blue : #282c34;
 $react-blue2: #61dafb;
+$navlinkColor: rgb(87, 183, 189);
+$logoblue: #6049e6;;
+
 
 main {
     width: 100%;
@@ -28,11 +31,11 @@ main {
         flex-direction: column;
         width:50%;
         align-self : center;
-        border : 1px solid #6049e6;
+        border : 1px solid $logoblue;
         border-radius: 30px;
         padding : 20px;
         // background-color : $react-blue2;
-        color : #6049e6;
+        color : $navlinkColor;
         font-weight: bolder;
         font-size : 30px;
         margin: 20px;
@@ -60,21 +63,30 @@ main {
     margin: 0 auto;
     color : white;
     background-color : $react-blue;
+    text-align: center;
 
     div {
-        color : white;
+        color : $navlinkColor;
         font-weight: bolder;
         font-size : 30px;
     }
+
+   .welcome-message {
+       font-weight: lighter;
+       text-align : center;
+       margin: 0 auto;
+   }
+
+
 }
 
 .coins {
     display: flex;
     // flex-wrap: wrap;
     flex-direction: row;
-    justify-content : center;
+    justify-content : space-between;
 
-    border: 1px solid red;
+    // border: 1px solid green;
     // @include on-circle(5046, 20rem, 6rem);
 
     .left-coins {
@@ -108,7 +120,10 @@ main {
 
         .dropdown-content {
             // border: 1px solid red;
-            display : none;
+            // display : none;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 1s, opacity 1s linear;
             position : absolute;
             background-color : #f9f9f9;
             // min-width: 160px;
@@ -125,14 +140,18 @@ main {
         }
 
         &:hover .dropdown-content {
-            display: block;
+            // display: block;
+            visibility : visible;
+            opacity: 1;
             border : 5px solid $react-blue;
         }
 
         &:hover .dropbtn {
-            background-color: $react-blue2;
-            color : $react-blue;
-            transition : 1s;
+            // background-color: $react-blue2;
+            // color : $react-blue;
+            transition : .5s;
+            box-shadow: 0 1px 4px #57b7bd, 0 1px 1px #6049e6;
+            cursor: context-menu;
         }
 
         &:hover div {
