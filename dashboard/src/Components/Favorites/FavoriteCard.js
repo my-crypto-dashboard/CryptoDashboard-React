@@ -12,15 +12,14 @@ class FavoriteCard extends Component {
     super(props);
     this.state = {
       price: '',
-      
     };
-    
+
   }
 
-    render (){
-      
-      return(
-      <div className={'card-1'}>  
+  render() {
+
+    return (
+      <div className={'card-1'}>
         <p className={'header'}>{this.props.displayName.toUpperCase()}</p>
         {/*
         <div style={{width:'50%', textAlign:'left', marginLeft:'45%'}}>
@@ -33,14 +32,11 @@ class FavoriteCard extends Component {
         <span style={{color:'#57b7bd'}}>Market Cap:</span>  <span> {millify(Math.round(this.props.mCap))}</span>
         </div>
         */}
-        <div className = {`chart${this.props.name}`} style={{paddingRight: '50px', width: '100%'}}><Chart name={this.props.name} pairs={this.props.pairs}/></div>   
+        <div className={`chart${this.props.name}`} style={{ paddingRight: '50px', width: '100%' }}><Chart name={this.props.name} pairs={this.props.pairs} /></div>
       </div>
-      );
+    );
 
-      }
-
-      
-   
+  }
 };
 
 

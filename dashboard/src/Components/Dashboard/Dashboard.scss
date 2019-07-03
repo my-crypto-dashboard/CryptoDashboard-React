@@ -125,6 +125,8 @@ main {
             // display : none;
             visibility: hidden;
             opacity: 0;
+            max-height: 100vh;
+            overflow: scroll;
             transition: visibility 1s, opacity 1s linear;
             position : absolute;
             background-color: black;
