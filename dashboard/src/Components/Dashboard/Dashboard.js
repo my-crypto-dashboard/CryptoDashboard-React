@@ -190,7 +190,7 @@ class Dashboard extends React.Component {
                             </div>)}
 
                         {/* <div>{this.state.cryptoPair[this.state.leftcoin.id][this.state.rightcoin.symbol]}</div> */}
-                        {(!this.state.leftcoinUSD && !this.state.rightcoinUSD) && <div className="welcome-message">Welcoe to the CryptDash Dashboard<br />To begin, type a Crypto Ticker Symbol in the Left & Right Crypto Fields</div>}
+                        {(!this.state.leftcoinUSD && !this.state.rightcoinUSD) && <div className="welcome-message">Welcome to the CryptDash Dashboard<br />To begin, type a Crypto Ticker Symbol in the Left & Right Crypto Fields</div>}
 
                         {this.state.rightcoinUSD && (
                             <div className="rightData">
