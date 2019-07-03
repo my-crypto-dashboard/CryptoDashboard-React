@@ -1,4 +1,5 @@
 $whiteColor:  #a4a4a4;
+$separator: #7e8386;
 
 .header{
     background-color: rgb(18, 21, 23);
@@ -29,27 +30,72 @@ $whiteColor:  #a4a4a4;
     color: $whiteColor;
 }
 
-.section-header .header-box{
+.team-section{
     padding: 0 0 0 60px;
 }
 
+.section-header{
+    margin: 0 0 40px;
+}
+// .section-header .header-box{
+//     padding: 0 0 0 60px;
+// }
+
 .section-header h4{
     background-clip: text;
-    color: rgb(164, 164, 164);
+    color: $whiteColor;
     font-size: 16px;
     letter-spacing: 4px;
     margin-top: 80px;
     text-transform: uppercase;
-    
 }
 
 .section-header .separator{
     height: 1px;
     margin-top: 14px;
     width: 77px;
-    border-top: 1px solid rgb(126, 131, 134);
+    border-top: 1px solid $separator;
+}
+.image-section{
+    flex-direction: column;
+    // background-color: rgb(23, 26, 29);
+    padding-bottom: 20px;
 }
 
+.image-container{
+    display: flex;
+    // flex-flow: row nowrap;
+    // padding-bottom: 36px;
+    // padding-right: 36px;
+    // width: 25%;
+}
+
+.image-box{
+    padding-bottom: 36px;
+    padding-right: 36px;
+    width: 25%;
+}
+
+.image-box .avatar{
+    border-radius: 11px;
+}
+
+
+.image-box:hover .avatar {
+    opacity: 0.2;
+    
+}
+
+.image-box p{
+    margin: 17px 0 8px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.image-box .icon-gh{
+    margin: 0 0 0 10px;
+}
 
 
 
