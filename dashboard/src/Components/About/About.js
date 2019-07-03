@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
+import {NavLink} from 'react-router-dom'
+
 import '../About/About.scss'
 import Grid from '@material-ui/core/Grid';
 import iconLinkedin from '../Assets/iconLinkedin.svg'
 import iconGithub from '../Assets/iconGithub.svg'
+
 
 
 
@@ -15,11 +18,15 @@ class About extends Component {
        
       };
     }
+    
   
     
-    render() {
+    render()
+     {
       return (
+        
         <container>
+        <div className="container">
         <Grid className= "header">
 <h3>what cryptdash is all about</h3>
 <p class=" text-center w-responsive">Cryptdash provides real-time updates for all the market prices. 
@@ -72,7 +79,41 @@ The market prices can be paired off with your choice and make a list of prices a
        </section>
        </div>
 
+
+  <footer>
+        <NavLink className="bottom-nav"
+            to = {'/dashboard'}
+            activeStyle={{
+                borderTop: '1px solid #6049e6', borderBottom: '1px solid #6049e6'}}>
+            <span >Dashboard</span>
+        </NavLink>
+
+        <NavLink className="bottom-nav"
+            to ='/favorites'
+            activeStyle={{
+                borderTop: '1px solid #6049e6', borderBottom: '1px solid #6049e6'}}>
+            <span>Favorites</span>
+        </NavLink>
+
+        <NavLink className="bottom-nav"
+            to ='/wallets'
+            activeStyle={{
+                borderTop: '1px solid #6049e6', borderBottom: '1px solid #6049e6'}}>
+            <span >Wallets</span>
+        </NavLink>
+
+        <NavLink className="bottom-nav"
+            to ='/about'
+            activeStyle={{
+                borderTop: '1px solid #6049e6', borderBottom: '1px solid #6049e6' }}>
+            <span >About</span>
+        </NavLink>
+  </footer>
+  <div className="copyright">©2019 Cryptdash, Inc.</div>
+  </div>
 </container>
+
+
 
 
       
