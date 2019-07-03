@@ -1,5 +1,4 @@
 import React from 'react'
-import {NavLink} from 'react-router-dom'
 import logo from '../Assets/cryptdash-name.png'
 import '../../App.scss'
 
