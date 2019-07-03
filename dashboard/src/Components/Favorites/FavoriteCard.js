@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Chart from '../Charts/CardCharts'
 import millify from 'millify'
 import '../components.scss'
-
+import axios from 'axios'
 
 
 
@@ -11,25 +11,30 @@ class FavoriteCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-    
+      price: '',
+      
     };
     
   }
 
     render (){
+      
       return(
       <div className={'card-1'}>  
-      <p className={'header'}>{this.props.name.toUpperCase()}</p>
-      <div style={{width:'50%', textAlign:'left', marginLeft:'45%'}}>
-      <span style={{color:'#57b7bd'}}>24hr. Change:</span> <span style={{ }}>{Math.round(this.props.change*100)/100} %</span>  
-      <p></p>
-      <span style={{color:'#57b7bd'}}>Current Price:</span>  <span> ${this.props.price}</span>
-      <p></p>
-      <span style={{color:'#57b7bd'}}>Market Cap:</span>  <span> {millify(Math.round(this.props.mCap))}</span>
+        <p className={'header'}>{this.props.displayName.toUpperCase()}</p>
+        {/*
+        <div style={{width:'50%', textAlign:'left', marginLeft:'45%'}}>
+        <span style={{color:'#57b7bd'}}>24hr. Change:</span> <span style={{ }}>{Math.round(this.props.change*100)/100} %</span> 
+        
+        <p></p>
+        <span style={{color:'#57b7bd'}}>Current Price:</span>  <span> ${this.state.price}</span>
+        <p></p>
+        
+        <span style={{color:'#57b7bd'}}>Market Cap:</span>  <span> {millify(Math.round(this.props.mCap))}</span>
+        </div>
+        */}
+        <div className = {`chart${this.props.name}`} style={{paddingRight: '50px', width: '100%'}}><Chart name={this.props.name} pairs={this.props.pairs}/></div>   
       </div>
-      <div className = {`chart${this.props.name}`} style={{paddingRight: '50px', width: '100%'}}><Chart name={this.props.name} time={this.state.time}/></div>
-     
-    </div>
       );
 
       }
