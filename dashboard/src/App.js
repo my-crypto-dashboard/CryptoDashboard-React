@@ -8,7 +8,6 @@ import Wallets from './Components/Wallets/Wallets'
 import Dashboard from './Components/Dashboard/Dashboard'
 import fire from './config/firebase';
 import firebase from 'firebase';
-import Chart from './Components/Charts/chart';
 // import Footer from './Components/Footer/Footer'
 
 
@@ -26,11 +25,13 @@ class App extends Component {
 
   componentDidMount() {
     this.authListener();
+  }
 
+  addPair() {
     let db = fire.firestore();
-    let pair  = ['bitcoin', 'eth']
+    let pair = ['bitcoin', 'eth']
     return db.collection("users")
-        .doc(this.state.user.id) //<--- id of user who left erview, same as above, state.userId
+        .doc(`${this.state.user.id}`) //<--- id of user who left erview, same as above, state.userId
         .update({ favorites: firebase.firestore.FieldValue.arrayUnion(pair) })
         .then((res) => {
           console.log(res);
@@ -110,14 +111,13 @@ class App extends Component {
     return (
        
       <div className="App">
-        <Chart/>
       <NavBar user={this.state.user} login={this.login} logout={this.logout}/>
         <Route exact path="/dashboard" render={ (props) => {
             return(<Dashboard {...props} showCrypto={this.showCrypto} />)
           }} />
         
         <Route exact path="/favorites" render={ (props) => {
-            return(<Favorites {...props}  ids={['bitcoin','ethereum','abcc-token','bitBTC','acepay']} />)
+            return(<Favorites {...props}  ids={['bitcoin','ethereum','bitBTC']} />)
           }} />
         <Route exact path="/about" render={ (props) => {
             return(<About {...props} />)

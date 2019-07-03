@@ -4,8 +4,6 @@ import axios from 'axios'
 import '../components.scss'
 
 
-
-
 class Favorites extends Component {
     constructor(props) {
       super(props);
@@ -15,20 +13,23 @@ class Favorites extends Component {
       };
 }
 
-
-   
-
     componentDidMount(){
         let ids = this.state.ids
+        console.log(ids)
         axios
         .get(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true`)
         .then (response => {
+          console.log('response', response.data)
          let value =  Object.entries(response.data).map(([key, value]) => {
-            return value
+         const newValue = Object.assign({name:key}, value)
+         
+           console.log(newValue)
+          
+            return {newValue}  
           })
             this.setState({
                 favorites: value});
-                console.log('state', value)
+                console.log('state', this.state)
           })
         .catch(err => {
             console.log(err);
@@ -39,17 +40,18 @@ class Favorites extends Component {
   
     render() {
       return (
-        <div >
+        <div>
 
           <div>
           {this.state.favorites.map(favorite => {   
             return (
               <FavoriteCard 
-              key = {favorite.index}
-              price = {favorite.usd}
-              mCap = {favorite.usd_market_cap}
-              change = {favorite.usd_24h_change}
-              />
+              name=   {favorite.newValue.name}
+              price = {favorite.newValue.usd}
+              mCap =  {favorite.newValue.usd_market_cap}
+              change ={favorite.newValue.usd_24h_change}
+              >
+              </FavoriteCard>
             )             
               
           })};
