@@ -130,8 +130,9 @@ main {
             // display : none;
             visibility: hidden;
             opacity: 0;
+            margin-right: 105px;
             transition: visibility 1s, opacity 1s linear;
-            position : absolute;
+            position : relative;
             background-color: black;
             // min-width: 160px;
             border: 1px solid $navlinkColor;
@@ -140,7 +141,7 @@ main {
 
             div {
                 // color : red;
-                padding: 12px 16px;
+                padding: 6px 8px;
                 text-decoration: none;
                 display: block;
                 background-color : black;
@@ -152,6 +153,7 @@ main {
         &:hover .dropdown-content {
             // display: block;
             visibility : visible;
+           
             opacity: 1;
         }
 
