@@ -1,5 +1,5 @@
 [Settings]
-ID = "143ac214-cc33-4186-9ee9-10b665225d41"
+ID = "c43d9f8b-ab34-4583-9ca4-e06895e60339"
 
 # Settings in the [build] context are global and are applied to all contexts unless otherwise overridden by more specific contexts.  
 
@@ -8,7 +8,7 @@ ID = "143ac214-cc33-4186-9ee9-10b665225d41"
   base    = "dashboard/"
   # NOTE: This is where we will look for package.json/.nvmrc/etc, not root.
   # This is the directory that you are publishing from (relative to root of your repo)
-  publish = "build"
+  publish = "dashboard/build"
   # This will be your default build command
   command = "yarn build"
 
