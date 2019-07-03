@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import Chart from '../Charts/CardCharts'
+import millify from 'millify'
 import '../components.scss'
 
 
@@ -15,10 +16,6 @@ class FavoriteCard extends Component {
     
   }
 
-  
-
- 
-
     render (){
       return(
       <div className={'card-1'}>  
@@ -28,7 +25,7 @@ class FavoriteCard extends Component {
       <p></p>
       <span style={{color:'#57b7bd'}}>Current Price:</span>  <span> ${this.props.price}</span>
       <p></p>
-      <span style={{color:'#57b7bd'}}>Market Cap:</span>  <span> {this.props.mCap.toString()}</span>
+      <span style={{color:'#57b7bd'}}>Market Cap:</span>  <span> {millify(Math.round(this.props.mCap))}</span>
       </div>
       <div className = {`chart${this.props.name}`} style={{paddingRight: '50px', width: '100%'}}><Chart name={this.props.name} time={this.state.time}/></div>
      
