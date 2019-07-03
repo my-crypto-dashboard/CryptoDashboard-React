@@ -1,4 +1,3 @@
-
 import React from 'react';
 import axios from 'axios';
 import ReactPaginate from 'react-paginate';
@@ -224,7 +223,6 @@ class Dashboard extends React.Component {
                         {this.state.rightcoinUSD && (
                             <div className="rightData">
                                 <div>{Object.keys(this.state.rightcoinUSD)[0]}</div>
-                                
 C                            </div>)}
                     </div>
                     <div className='coins'>

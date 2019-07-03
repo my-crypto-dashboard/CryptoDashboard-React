@@ -19,7 +19,9 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      user: 'null'
+      user: {
+        favorites: []
+      }
     }
 
     this.addPair = this.addPair.bind(this);
@@ -35,7 +37,7 @@ class App extends Component {
 
   async addPair(pair1, pair2) {
     let db = await fire.firestore();
-    let pair = {firstPair: pair1.id, secondPair: pair2.id};
+    let pair = {1: pair1.id, 2: pair2.id};
     await db.collection("users")
         .doc(this.state.user.id)
         .update({ favorites: firebase.firestore.FieldValue.arrayUnion(pair)})
@@ -129,7 +131,7 @@ class App extends Component {
           }} />
         
         <Route exact path="/favorites" render={ (props) => {
-            return(<Favorites {...props}  ids={['bitcoin','ethereum','0x',"1irstcoin"]} />)
+            return(<Favorites {...props}  favorites={(this.state.user.favorites)}/>)
           }} />
         <Route exact path="/about" render={ (props) => {
             return(<About {...props} />)

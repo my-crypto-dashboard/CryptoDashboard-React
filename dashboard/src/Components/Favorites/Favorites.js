@@ -8,28 +8,25 @@ class Favorites extends Component {
     constructor(props) {
       super(props);
       this.state = {
-       ids: [props.ids],
-       favorites: []
+        favoritesObj: []
       };
 }
 
-    componentDidMount(){
-        let ids = this.state.ids
-        console.log(ids)
-        axios
-        .get(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true`)
+    async componentDidMount(){
+        let newTemp = []
+        this.props.favorites.forEach(item => {
+          newTemp.push(item[1])
+          newTemp.push(item[2])
+        });
+        await axios
+        .get(`https://api.coingecko.com/api/v3/simple/price?ids=${newTemp}&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true`)
         .then (response => {
-          console.log('response', response.data)
-         let value =  Object.entries(response.data).map(([key, value]) => {
-         const newValue = Object.assign({name:key}, value)
-         
-           console.log(newValue)
-          
-            return {newValue}  
+          let value =  Object.entries(response.data).map(([key, value]) => {
+            const newValue = Object.assign({name:key}, value) 
+            return newValue;
           })
-            this.setState({
-                favorites: value});
-                console.log('state', this.state)
+          this.setState({
+            favoritesObj: value});
           })
         .catch(err => {
             console.log(err);
@@ -39,17 +36,23 @@ class Favorites extends Component {
     
   
     render() {
+
+      console.log(this.state.favoritesObj)
       return (
         <div class={'favorites'}>
-
           <div>
-          {this.state.favorites.map(favorite => {   
+          {         
+            this.props.favorites.map((favorite,index) => { 
+              
             return (
               <FavoriteCard 
-              name=   {favorite.newValue.name}
-              price = {favorite.newValue.usd}
-              mCap =  {favorite.newValue.usd_market_cap}
+              displayName={`${favorite[1]} / ${favorite[2]}`}
+              name= {`${favorite[1]}${favorite[2]}`}
+              /*
               change ={favorite.newValue.usd_24h_change}
+              */
+              pairs={favorite}
+              
               >
               </FavoriteCard>
             )             
