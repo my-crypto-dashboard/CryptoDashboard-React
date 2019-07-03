@@ -1,4 +1,4 @@
-    
+
 import React from 'react';
 import axios from 'axios';
 import './Dashboard.scss';
@@ -13,7 +13,8 @@ class Dashboard extends React.Component {
 
         this.state = {
             coins: [],
-            cryptoPair: null
+            cryptoPair: null,
+            favorite: false
         }
         this.baseState = this.state;
     }
@@ -114,43 +115,9 @@ class Dashboard extends React.Component {
         }
     }
 
-    //     if (leftCoinFound) {
-    //         this.setState({ leftcoin })
-    //     }
-
-    //     if (leftcoin && rightcoin) {
-    //         this.showCryptoPair(leftcoin, rightcoin);
-    //     }
-    //     // forms.forEach( form => form.)
-    //     if (form.name === 'left-form') {
-    //         const leftcoin = this.state.coins.filter(coin => coin.symbol === crypto.value)[0];
-
-    //         this.setState({ leftcoin });
-    //         if (!leftcoin) {
-    //             alert('no crypto ticker found with that symbol. ')
-    //         } else {
-    //             this.displayCryptoLeft(leftcoin);
-    //         }
-    //     } else if (form.name === 'right-form') {
-    //         const rightcoin = this.state.coins.filter(coin => coin.symbol === crypto.value)[0];
-    //         this.setState({ rightcoin });
-    //         if (!rightcoin) {
-    //             alert('no crypto ticker found with that symbol. ', crypto.value);
-    //         } else {
-    //             this.displayCryptoRight(rightcoin);
-    //         }
-    //     }
-    // }
 
     showCryptoPair = (leftcoin, rightcoin) => {
         console.log('showcryptopair fired', leftcoin, rightcoin);
-        // this.setState({ leftcoin, rightcoin });
-
-        // let leftcoinID = Object.keys(this.state.cryptoLeft)[0];
-
-        // const leftcoinID = this.state.coins.filter(coin => coin.symbol === leftcoin)[0].id;
-        // console.log('showcryptopair leftcoinid', leftcoinID);
-        // this.setState({ leftcoinID });
 
         axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${leftcoin.id}&vs_currencies=${rightcoin.symbol}`)
             .then(res => {
@@ -159,6 +126,11 @@ class Dashboard extends React.Component {
 
             })
             .catch(err => console.log(err));
+    }
+
+    favoriteToggle = () => {
+        console.log('favoriteToggle triggered');
+        this.setState(state => ({ favorite: !state.favorite }))
     }
 
     render() {
@@ -181,10 +153,16 @@ class Dashboard extends React.Component {
 
                     {(this.state.leftcoin && this.state.rightcoin && this.state.cryptoPair) && (
                         <div className="middleData">
-                            <div>{this.state.leftcoin.symbol} / {this.state.rightcoin.symbol}</div>
-                            <div> {this.state.cryptoPair[this.state.leftcoin.id][this.state.rightcoin.symbol]}</div>
+                            <div>
+                                <div>{this.state.leftcoin.symbol} / {this.state.rightcoin.symbol}</div>
+                                <div> {this.state.cryptoPair[this.state.leftcoin.id][this.state.rightcoin.symbol]}</div>
+                            </div>
+
+                            <button onClick={() => this.favoriteToggle()}>Add to Favorites</button>
                         </div>
                     )}
+
+                    {/* {this.state.cryptoPair && <button onClick={() => this.favoriteToggle()}>Add to Favorites</button>} */}
 
                     <form name='right-form' onSubmit={(e) => {
                         e.preventDefault();
