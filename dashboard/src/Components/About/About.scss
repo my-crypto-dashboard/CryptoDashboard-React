@@ -37,9 +37,6 @@ $separator: #7e8386;
 .section-header{
     margin: 0 0 40px;
 }
-// .section-header .header-box{
-//     padding: 0 0 0 60px;
-// }
 
 .section-header h4{
     background-clip: text;
@@ -58,16 +55,12 @@ $separator: #7e8386;
 }
 .image-section{
     flex-direction: column;
-    // background-color: rgb(23, 26, 29);
     padding-bottom: 20px;
 }
 
 .image-container{
     display: flex;
     // flex-flow: row nowrap;
-    // padding-bottom: 36px;
-    // padding-right: 36px;
-    // width: 25%;
 }
 
 .image-box{
