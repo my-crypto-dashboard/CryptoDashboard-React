@@ -6,7 +6,7 @@ import axios from 'axios';
 const Chart = props => {
 
   useEffect(() => {
-    axios.get(`https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=${364}`)
+    axios.get(`https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=${30}`)
     .then(res => {
         let priceData = res.data.prices;
         let marketCapData = res.data.market_caps;
@@ -29,35 +29,49 @@ const Chart = props => {
         let maxDate = priceData[priceData.length -1][0];
         let minPrice = d3.min(priceData, function(d) { return d[1]});
         let maxPrice = d3.max(priceData, function(d) { return d[1]});
-        let diffPrice = ((maxPrice - minPrice) / 2);
+        let changePrice = (minPrice/ 5);
 
         let minMC = d3.min(marketCapData, function(d) { return d[1]});
         let maxMC = d3.max(marketCapData, function(d) { return d[1]});
-        let changeMC = (maxMC % 4)
+        let changeMC = (minMC / 10);
         
         let y = d3.scaleLinear().rangeRound([height, 0])
         let x = d3.scaleTime().rangeRound([0, width]);
         
         let y2 = d3.scaleLinear().rangeRound([height, 0]);
-        console.log(minPrice -diffPrice);
-        console.log(maxPrice + maxPrice);
 
         let line = d3.line().x(function(d) {return x(d[0])}).y(function(d) { return y(d[1])})
-                            x.domain([minDate, maxDate]).tickFormat(d3.timeFormat("%d%m"));
-                            y.domain([minPrice, maxPrice]);
+                            x.domain([minDate, maxDate]);
+                            y.domain([minPrice - changePrice, maxPrice + changePrice]);
 
         let marketCapLine = d3.line().x(function(d) {return x(d[0])}).y(function(d) {return y2(d[1])})
                             y2.domain([minMC - changeMC, maxMC + changeMC])
+
+        const ticksAmount = 4;
+        const tickStep = (maxMC - minMC) / (ticksAmount);
+        const step = Math.ceil(tickStep / ticksAmount) * ticksAmount;
+
+        const tickStepPrice = (maxPrice - minPrice) / ticksAmount;
+        const stepPrice = Math.ceil(tickStepPrice / ticksAmount) * ticksAmount;
 
 
         g.append('g')
             .attr('transform', `translate(0, ${height})`)
             .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%d. %b")))
+            .attr('dx', '0.71em')
+            .attr('fill', '#000')
             .select('.domain')
             .remove();
 
         g.append('g')
-            .call(d3.axisLeft(y2).ticks(4))
+            .call(d3.axisLeft(y2)
+                .ticks(ticksAmount)
+                .tickValues(d3.range(minMC, maxMC + step, step))
+                .tickFormat(d3.format('d'))
+                .tickSizeInner(-width)
+                .tickSizeOuter(0)
+                .tickPadding(5)
+            )
             .append('text')
             .attr('fill', '#000')
             .attr('transform', 'rotate(-90)')   
@@ -67,7 +81,14 @@ const Chart = props => {
 
         g.append('g')
             .attr('transform', `translate(${width}, 0)`)
-            .call(d3.axisRight(y).ticks(4))
+            .call(d3.axisRight(y)
+                .ticks(ticksAmount)
+                .tickValues(d3.range(minPrice, maxPrice + stepPrice, stepPrice))
+                .tickFormat(d3.format('d'))
+                .tickSizeInner(-width)
+                .tickSizeOuter(0)
+                .tickPadding(5)
+            )
             .append('text')
             .attr('fill', '#000')
             .attr('transform', 'rotate(-90')
