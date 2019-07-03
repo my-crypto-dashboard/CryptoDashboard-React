@@ -21,7 +21,7 @@ class FavoriteCard extends Component {
       
       return(
       <div className={'card-1'}>  
-        <p className={'header'}>{this.props.displayName.toUpperCase()}</p>
+        <p className={'header1'}>{this.props.displayName.toUpperCase()}</p>
         <span style={{color:'#57b7bd'}}>24hr. Change:</span> <span style={{ }}>{Math.round(this.props.change)} %</span> 
         <p></p>
         <span style={{color:'#57b7bd'}}>Current Price:</span>  <span>{this.props.price} {this.props.displayName.toUpperCase()}</span>
