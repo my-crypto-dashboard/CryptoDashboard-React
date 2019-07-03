@@ -31,7 +31,7 @@ The market prices can be paired off with your choice and make a list of prices a
     <div className="team-section">
        <section className="section-header">
        <div className="header-box">
-         <h4>our engineering team</h4>
+         <h4 style={{textAlign:'left'}}>our engineering team</h4>
          <div className="separator"></div>
         </div>
        </section>
