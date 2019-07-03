@@ -43,6 +43,7 @@ class App extends Component {
         .update({ favorites: firebase.firestore.FieldValue.arrayUnion(pair)})
         .then((res) => {
           console.log(res);
+          this.setState({user: {favorites: [...this.state.user.favorites, pair]}});
         })
         .catch(err => {
           console.log(err);
