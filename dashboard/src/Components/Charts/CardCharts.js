@@ -4,14 +4,51 @@ import axios from 'axios';
 
 
 const Chart = props => {
-
+  
 
   useEffect(() => {
-    axios.get(`https://api.coingecko.com/api/v3/coins/${props.name}//market_chart?vs_currency=usd&days=30`)
-    .then(res => {
-        let priceData = res.data.prices;
-        let marketCapData = res.data.market_caps;
-        let volumeData = res.data.total_volumes;
+    async function setup() {
+      let firstPairData = await axios.get(`https://api.coingecko.com/api/v3/coins/${props.pairs[1]}//market_chart?vs_currency=usd&days=30`)
+      .then(res => {
+        return res.data.prices;
+      })
+      .catch(err => console.log(err));
+      console.log("PAIRS", firstPairData)
+
+      let secondPairData = await axios.get(`https://api.coingecko.com/api/v3/coins/${props.pairs[2]}//market_chart?vs_currency=usd&days=30`)
+      .then(res => {
+        return res.data.prices;
+      })
+      .catch(err => {
+          console.log(err);
+      })
+
+      const parseData = () => {
+        let cap = Math.min(firstPairData.length, secondPairData.length);
+        if(firstPairData.length > secondPairData.length) {
+          return firstPairData.map((val, i) => {
+            if(i < cap) {
+              return [val[0], val[1]/secondPairData[i][1]];
+            } else {
+              return [val[0], val[1]/secondPairData[cap -1][1]];
+            }
+            
+          })
+        } else {
+          return secondPairData.map((val, i) => {
+            if(i < cap) {
+              return [val[0], val[1]/firstPairData[i][1]];
+            } else {
+              return [val[0], val[1]/firstPairData[cap -1][1]];
+            }
+            
+          })
+        }
+      }
+      
+      let data = parseData();
+
+
         let svgHeight = 400;
         let svgWidth = 800;
         let margin = {top: 20, right: 20, bottom: 30, left: 150}
@@ -24,17 +61,18 @@ const Chart = props => {
 
         let g = svg.append('g').attr('transform', `translate(${margin.left}, ${margin.top})`);
 
-
         // Date/Price data for prices
-        let minDate = priceData[0][0];
-        let maxDate = priceData[priceData.length -1][0];
-        let minPrice = d3.min(priceData, function(d) { return d[1]});
-        let maxPrice = d3.max(priceData, function(d) { return d[1]});
+        let minDate = data[0][0];
+        let maxDate = data[data.length -1][0];
+        let minPrice = d3.min(data, function(d) { 
+            return d[1]         
+        });
+        let maxPrice = d3.max(data, function(d) { 
+          return d[1]
+        });
         
         let y = d3.scaleLinear().rangeRound([height, 0]);
         let x = d3.scaleTime().rangeRound([0, width]);  
-        
-        let y2 = d3.scaleLinear().rangeRound([height, 0]);
 
         let line = d3.line().x(function(d) {return x(d[0])}).y(function(d) { return y(d[1])})
                             x.domain([minDate, maxDate])
@@ -59,19 +97,18 @@ const Chart = props => {
             
 
         g.append('path')
-        .datum(priceData)
+        .datum(data)
         .attr('fill', 'none')
         .attr('stroke', '#6049e6')
         .attr('stroke-linjoin', 'round')
         .attr('stroke-linecap', 'round')
         .attr('stroke-width', 1.5)
         .attr('d', line);
+        
+    }
 
-       
-    })
-    .catch(err => {
-        console.log(err);
-    })
+    setup();
+    
   }, []);
 
   return (

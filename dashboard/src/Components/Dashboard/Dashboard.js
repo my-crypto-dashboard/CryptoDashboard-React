@@ -1,13 +1,11 @@
 import React from 'react';
 import axios from 'axios';
+import ReactPaginate from 'react-paginate';
 import './Dashboard.scss';
-// import Slide from 'react-reveal/Slide';
-import Coin from './Coin';
-// import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-// import ControlledCarousel from './Carousel';
 // import Spin from './Spin';
 // import Wheel from './Wheel';
 // console.log(Wheel);
+
 
 class Dashboard extends React.Component {
 
@@ -17,44 +15,55 @@ class Dashboard extends React.Component {
         this.state = {
             coins: [],
             cryptoPair: null,
-            favorite: false,
-            dropdownOpen: false
+            currentPage: 1,
+            coinsPerPage: 30,
+            favorite: false
         }
         this.baseState = this.state;
+
+        this.handleClick = this.handleClick.bind(this);
     }
 
-    toggle = () => {
-        this.setState(prevState => ({
-            dropdownOpen: !prevState.dropdownOpen
-        }));
+    handleClick(event) {
+        console.log(event.target.id);
+            this.setState({
+            currentPage: (event.target.id === 'prev' ? this.state.currentPage - 1 : this.state.currentPage + 1)
+            })
     }
 
     componentDidMount() {
         axios.get('https://api.coingecko.com/api/v3/coins/list')
             .then(res => {
+                console.log(res.data)
                 this.setState({ coins: res.data })
             })
             .catch(err => console.log(err))
+    }
+
+    currencyConverter(coin, coin2) {
+        this.setState({cryptoPair: coin.usd / coin2.usd});
     }
 
     componentWillUnmount() {
         this.setState(this.baseState);
     }
 
-    displayCryptoLeft = coin => {
+    displayCryptoLeft = async(coin) => {
         console.log('displayCryptoLeft triggered');
-        this.setState({ leftcoin: null });  //why does setting state not work here, but it works inside the axios call?
-
+        await this.setState({ leftcoin: null });  //why does setting state not work here, but it works inside the axios call?
+        let coinData = null;
         if (coin) {
 
-            axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${coin.id}&vs_currencies=usd`)
+           await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${coin.id}&vs_currencies=usd`)
                 .then(res => {
                     this.setState({
                         leftcoinUSD: res.data,
                         leftcoin: coin
                     })
+                    coinData = res.data[coin.id];
                 })
                 .catch(err => console.log(err));
+
         }
 
 
@@ -62,20 +71,24 @@ class Dashboard extends React.Component {
         // }
 
         if (this.state.rightcoin) {
-            this.showCryptoPair(coin, this.state.rightcoin);
+            console.log(coinData);
+            console.log(this.state.rightcoinUSD)
+            this.currencyConverter(coinData, this.state.rightcoinUSD[this.state.rightcoin.id])
         }
 
     }
 
-    displayCryptoRight = (coin) => {
+    displayCryptoRight = async(coin) => {
         console.log('displayCryptoRight triggered');
         console.log('right coin', coin);
-        this.setState({ rightcoin: null });
+        await this.setState({ rightcoin: null });
         console.log(this.state);
-
-        axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${coin.id}&vs_currencies=usd`)
+        let coinData = null;
+        await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${coin.id}&vs_currencies=usd`)
             .then(res => {
+                console.log(res);
                 this.setState({ rightcoinUSD: res.data, rightcoin: coin })
+                coinData = res.data[coin.id];
             })
             .catch(err => console.log(err));
 
@@ -86,13 +99,15 @@ class Dashboard extends React.Component {
         console.log('leftcoin and rightcoin in displayCryptoRight', this.state.leftcoin, coin);
 
         if (this.state.leftcoin) {
-            this.showCryptoPair(this.state.leftcoin, coin);
+            console.log(coinData);
+            console.log(this.state.leftcoin)
+            this.currencyConverter(this.state.leftcoinUSD[this.state.leftcoin.id], coinData)
         }
 
 
     }
 
-    cryptoSearch(crypto, form) {
+    async cryptoSearch (crypto, form) {
         console.log('cryptosearch triggered');
 
         const forms = document.querySelectorAll('form');
@@ -106,22 +121,19 @@ class Dashboard extends React.Component {
         console.log('rightCoinFound', rightCoinFound);
 
         if (leftCoinFound) {
-            this.setState({ leftcoin: leftCoinFound })
-            this.displayCryptoLeft(leftCoinFound);
+            await this.setState({ leftcoin: leftCoinFound })
+            await this.displayCryptoLeft(leftCoinFound);
         }
 
         if (rightCoinFound) {
-            this.setState({ rightcoin: rightCoinFound })
-            this.displayCryptoRight(rightCoinFound);
+            await this.setState({ rightcoin: rightCoinFound })
+            await this.displayCryptoRight(rightCoinFound);
         }
 
         // if (leftCoinFound && rightCoinFound) {
         //     this.showCryptoPair(leftCoinFound, rightCoinFound);
         // }
 
-        if (leftCoinFound && rightCoinFound) {
-            this.showCryptoPair(leftCoinFound, rightCoinFound);
-        }
     }
 
 
@@ -143,6 +155,18 @@ class Dashboard extends React.Component {
     }
 
     render() {
+
+        const { coins, currentPage, coinsPerPage } = this.state;
+
+        const indexOfLastTodo = currentPage * coinsPerPage;
+        const indexOfFirstTodo = indexOfLastTodo - coinsPerPage;
+        const currentCoins = coins.slice(indexOfFirstTodo, indexOfLastTodo);
+
+        const pageNumbers = [];
+          for (let i = 1; i <= Math.ceil(coins.length / coinsPerPage); i++) {
+            pageNumbers.push(i);
+        }
+
         return (
             <>
                 {/* <Wheel /> */}
@@ -157,25 +181,29 @@ class Dashboard extends React.Component {
                         e.preventDefault();
                         this.cryptoSearch(e.target[0], e.target);
                     }}>
-                        <input name="cryptoTicker" placeholder="Crypto" />
+                        <input name="cryptoTicker" placeholder="Crypto Ticker Symbol" />
                     </form>
 
                     {(this.state.leftcoin && this.state.rightcoin && this.state.cryptoPair) && (
                         <div className="middleData">
-                            <div>
-                                <div>{this.state.leftcoin.symbol} / {this.state.rightcoin.symbol}</div>
-                                <div> {this.state.cryptoPair[this.state.leftcoin.id][this.state.rightcoin.symbol]}</div>
-                            </div>
-
-                            <button onClick={() => this.favoriteToggle()}>Add to Favorites</button>
+                            <div>{this.state.leftcoin.symbol} / {this.state.rightcoin.symbol}</div>
+                            <div> {this.state.cryptoPair}</div>
+                            {this.props.user ?
+                                <button onClick={() => this.props.addPair(this.state.leftcoin, this.state.rightcoin)
+                                }>Add to Favorites</button>
+                                :
+                                null
+                            }
                         </div>
                     )}
+
+                    {/* {this.state.cryptoPair && <button onClick={() => this.favoriteToggle()}>Add to Favorites</button>} */}
 
                     <form name='right-form' onSubmit={(e) => {
                         e.preventDefault();
                         this.cryptoSearch(e.target[0], e.target);
                     }}>
-                        <input name="cryptoTicker" placeholder="Crypto" />
+                        <input name="cryptoTicker" placeholder="Crypto Ticker Symbol" />
                     </form>
                 </div>
 
@@ -184,43 +212,41 @@ class Dashboard extends React.Component {
                         {this.state.leftcoinUSD && (
                             <div className="leftData">
                                 <div>{Object.keys(this.state.leftcoinUSD)[0]}</div>
-                                {/* <div>{this.state.leftcoin.symbol}</div> */}
                                 <div>${Object.values(this.state.leftcoinUSD)[0]['usd']} usd</div>
                                 <div>  </div>
                             </div>)}
 
+
+
                         {/* <div>{this.state.cryptoPair[this.state.leftcoin.id][this.state.rightcoin.symbol]}</div> */}
-                        {(!this.state.leftcoinUSD && !this.state.rightcoinUSD) && <div className="welcome-message">Welcome to the CryptDash Dashboard<br />To begin, type a Crypto Ticker Symbol in the Left & Right Crypto Fields</div>}
 
                         {this.state.rightcoinUSD && (
                             <div className="rightData">
                                 <div>{Object.keys(this.state.rightcoinUSD)[0]}</div>
-                                {/* <div>{this.state.rightcoin.symbol}</div> */}
-                                <div>${Object.values(this.state.rightcoinUSD)[0]['usd']} usd</div>
-                            </div>)}
+C                            </div>)}
                     </div>
                     <div className='coins'>
-                        <div className='leftCoins dropdown'>
-                            {/* {this.state.coins.map((coin, i) => <Slide left><div key={i} className="left-coin" onClick={() => this.displayCryptoLeft(coin)}>{coin.symbol}</div></Slide>)} */}
-                            <button className="dropbtn">Crypto Tokens</button>
-
-                            <div className="dropdown-content">
-                                {this.state.coins.map((coin, i) => <Coin key={i} className="left-coin" coin={coin} display={this.displayCryptoLeft} />)}
-                            </div>
-
-                            {/* {this.state.coins.map((coin, i) => <Carousel key={i} cryptos={this.state.coins} />)} */}
-                            {/* <ControlledCarousel cryptos={this.state.coins} /> */}
-                            {/* <Coin coins={this.state.coins} display={this.displayCryptoLeft} /> */}
+                        <div className='leftCoins'>
+                            {currentCoins.map((coin, i) => <div key={i} className="left-coin" onClick={() => this.displayCryptoLeft(coin)}>{coin.symbol}</div>)}
                         </div>
-                        <div className='rightCoins dropdown'>
-
-                            <button className="dropbtn">Crypto Tokens</button>
-                            <div className="dropdown-content">
-                                {this.state.coins.map((coin, i) => <Coin key={i} className="right-coin" coin={coin} display={this.displayCryptoRight} />)}
-                            </div>
-                            {/* {this.state.coins.map((coin, i) => <div key={i} className="right-coin" onClick={() => this.displayCryptoRight(coin)}>{coin.symbol}</div>)} */}
-                            {/* <Coin coins={this.state.coins} display={this.displayCryptoRight} /> */}
+                        <div className='rightCoins'>
+                            {currentCoins.map((coin, i) => <div key={i} className="right-coin" onClick={() => this.displayCryptoRight(coin)}>{coin.symbol}</div>)}
                         </div>
+                        
+                    </div>
+                    <div className='pages'>
+                        {
+                            this.state.currentPage > 1 ?
+                                <button id='prev' onClick={(ev) => {this.handleClick(ev)}}>Prev</button>
+                            : 
+                                null
+                        }
+                        {
+                            this.state.currentPage <  Math.ceil(coins.length / coinsPerPage) ?
+                                <button id='next' onClick={(ev) => {this.handleClick(ev)}}>Next 30 -></button>
+                            : 
+                                null
+                        }
                     </div>
                 </main>
             </>
