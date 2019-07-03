@@ -5,8 +5,9 @@ import axios from 'axios';
 
 const Chart = props => {
 
+
   useEffect(() => {
-    axios.get(`https://api.coingecko.com/api/v3/coins/${props.name}//market_chart?vs_currency=usd&days=365`)
+    axios.get(`https://api.coingecko.com/api/v3/coins/${props.name}//market_chart?vs_currency=usd&days=30`)
     .then(res => {
         let priceData = res.data.prices;
         let marketCapData = res.data.market_caps;

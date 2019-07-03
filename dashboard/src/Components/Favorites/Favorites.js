@@ -40,7 +40,7 @@ class Favorites extends Component {
   
     render() {
       return (
-        <div>
+        <div class={'favorites'}>
 
           <div>
           {this.state.favorites.map(favorite => {   

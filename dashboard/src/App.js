@@ -8,6 +8,7 @@ import Wallets from './Components/Wallets/Wallets'
 import Dashboard from './Components/Dashboard/Dashboard'
 import fire from './config/firebase';
 import firebase from 'firebase';
+
 // import Footer from './Components/Footer/Footer'
 
 
@@ -17,8 +18,9 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      user: null
+      user: 'null'
     }
+    
   }
 
   componentDidMount() {
@@ -77,6 +79,7 @@ class App extends Component {
     })
   }
 
+
   logout() {
     fire.auth().signOut()
     .then(res => {
@@ -90,6 +93,10 @@ class App extends Component {
   showCrypto(coin) {
     console.dir(coin.value);
   }
+
+  
+
+  
   render(){
 
     return (
@@ -101,7 +108,7 @@ class App extends Component {
           }} />
         
         <Route exact path="/favorites" render={ (props) => {
-            return(<Favorites {...props}  ids={['bitcoin','ethereum','bitBTC']} />)
+            return(<Favorites {...props} user={this.state.user.id} ids={['bitcoin','ethereum','bitBTC',"1irstcoin"]} />)
           }} />
         <Route exact path="/about" render={ (props) => {
             return(<About {...props} />)
