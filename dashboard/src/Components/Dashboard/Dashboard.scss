@@ -1,36 +1,6 @@
 $react-blue : #282c34;
 $react-blue2: #61dafb;
 
-// @mixin on-circle($item-count, $circle-size, $item-size) {
-//     position: relative;
-//     width: $circle-size;
-//     height: $circle-size;
-//     border-radius: 50%;
-
-//     > * {
-//         position: absolute;
-//         top: 50%;
-//         left: 50%;
-//         width: $item-size;
-//         height: $item-size;
-//         // margin: -($item-size / 2);
-
-//         $angle : (360 / $item-count);
-//         $rotate : 0;
-
-//         @for $i from 1 through $item-count {
-//             &:nth-of-type(#{$i}) {
-//                 transform: 
-//                     rotate($rotate * 1deg)
-//                     translate($circle-size / 2)
-//                     rotate($rotate * -1deg)
-//             }
-
-//             $rotate: $rotate + $angle;
-//         }
-//     }
-// }
-
 main {
     background-color : white;
     width: 100%;
@@ -74,6 +44,7 @@ main {
             color : white;
             width: 50%;
             align-self : center;
+            cursor : pointer;
         }
 
 
@@ -94,9 +65,8 @@ main {
     div {
         color : white;
         font-weight: bolder;
+        font-size : 30px;
     }
-
-
 }
 
 .coins {
@@ -131,8 +101,8 @@ main {
             color : white;
             border-radius : 0px;
             height: 50px;
-            width : 100px;
-            margin: 10px;
+            width : 150px;
+            margin: 10px 45px;
             cursor : pointer;
             transition : 1s;
         }
@@ -157,6 +127,7 @@ main {
 
         &:hover .dropdown-content {
             display: block;
+            border : 5px solid $react-blue;
         }
 
         &:hover .dropbtn {
@@ -170,7 +141,6 @@ main {
         }
     }
 }
-
 
 
 

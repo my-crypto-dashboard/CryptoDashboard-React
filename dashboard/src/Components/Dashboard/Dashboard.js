@@ -56,7 +56,6 @@ class Dashboard extends React.Component {
                     })
                 })
                 .catch(err => console.log(err));
-
         }
 
 
@@ -159,7 +158,7 @@ class Dashboard extends React.Component {
                         e.preventDefault();
                         this.cryptoSearch(e.target[0], e.target);
                     }}>
-                        <input name="cryptoTicker" placeholder="Crypto Ticker Symbol" />
+                        <input name="cryptoTicker" placeholder="Crypto" />
                     </form>
 
                     {(this.state.leftcoin && this.state.rightcoin && this.state.cryptoPair) && (
@@ -177,7 +176,7 @@ class Dashboard extends React.Component {
                         e.preventDefault();
                         this.cryptoSearch(e.target[0], e.target);
                     }}>
-                        <input name="cryptoTicker" placeholder="Crypto Ticker Symbol" />
+                        <input name="cryptoTicker" placeholder="Crypto" />
                     </form>
                 </div>
 
@@ -186,6 +185,7 @@ class Dashboard extends React.Component {
                         {this.state.leftcoinUSD && (
                             <div className="leftData">
                                 <div>{Object.keys(this.state.leftcoinUSD)[0]}</div>
+                                {/* <div>{this.state.leftcoin.symbol}</div> */}
                                 <div>${Object.values(this.state.leftcoinUSD)[0]['usd']} usd</div>
                                 <div>  </div>
                             </div>)}
@@ -197,6 +197,7 @@ class Dashboard extends React.Component {
                         {this.state.rightcoinUSD && (
                             <div className="rightData">
                                 <div>{Object.keys(this.state.rightcoinUSD)[0]}</div>
+                                {/* <div>{this.state.rightcoin.symbol}</div> */}
                                 <div>${Object.values(this.state.rightcoinUSD)[0]['usd']} usd</div>
                             </div>)}
                     </div>
