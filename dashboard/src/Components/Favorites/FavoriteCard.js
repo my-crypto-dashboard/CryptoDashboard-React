@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import Chart from '../Charts/CCharts'
-import axios from 'axios'
+import Chart from '../Charts/CardCharts'
 import '../components.scss'
 
 

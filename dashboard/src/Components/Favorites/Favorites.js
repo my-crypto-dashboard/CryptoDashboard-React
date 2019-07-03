@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import FavoriteCard from './FavoriteCard'
 import axios from 'axios'
-import Chart from '../Charts/Charts'
 import '../components.scss'
-
-
 
 
 class Favorites extends Component {
@@ -15,9 +12,6 @@ class Favorites extends Component {
        favorites: []
       };
 }
-
-
-   
 
     componentDidMount(){
         let ids = this.state.ids
@@ -46,7 +40,7 @@ class Favorites extends Component {
   
     render() {
       return (
-        <div >
+        <div style={{height: '100%'}}>
 
           <div>
           {this.state.favorites.map(favorite => {   
