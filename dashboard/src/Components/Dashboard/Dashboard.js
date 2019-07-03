@@ -5,6 +5,7 @@ import './Dashboard.scss';
 // import Spin from './Spin';
 // import Wheel from './Wheel';
 // console.log(Wheel);
+import Coin from './Coin';
 
 
 class Dashboard extends React.Component {
@@ -17,11 +18,18 @@ class Dashboard extends React.Component {
             cryptoPair: null,
             currentPage: 1,
             coinsPerPage: 30,
-            favorite: false
+            favorite: false,
+            dropdownOpen: false
         }
         this.baseState = this.state;
 
         this.handleClick = this.handleClick.bind(this);
+    }
+
+    toggle = () => {
+        this.setState(prevState => ({
+            dropdownOpen: !prevState.dropdownOpen
+        }));
     }
 
     handleClick(event) {
@@ -217,7 +225,7 @@ class Dashboard extends React.Component {
                             </div>)}
 
 
-
+                        {(!this.state.leftcoinUSD && !this.state.rightcoinUSD) && <div className="welcome-message">Welcome to the CryptDash Dashboard<br />To begin, type a Crypto Ticker Symbol in the Left & Right Crypto Fields</div>}
                         {/* <div>{this.state.cryptoPair[this.state.leftcoin.id][this.state.rightcoin.symbol]}</div> */}
 
                         {this.state.rightcoinUSD && (
@@ -227,28 +235,30 @@ class Dashboard extends React.Component {
                             </div>)}
                     </div>
                     <div className='coins'>
-                        <div className='leftCoins'>
-                            {currentCoins.map((coin, i) => <div key={i} className="left-coin" onClick={() => this.displayCryptoLeft(coin)}>{coin.symbol}</div>)}
+                    <div className='leftCoins dropdown'>
+                            {/* {this.state.coins.map((coin, i) => <Slide left><div key={i} className="left-coin" onClick={() => this.displayCryptoLeft(coin)}>{coin.symbol}</div></Slide>)} */}
+                            <button className="dropbtn">Crypto Tokens</button>
+
+                            <div className="dropdown-content">
+                                {this.state.coins.map((coin, i) => <Coin key={i} className="left-coin" coin={coin} display={this.displayCryptoLeft} />)}
+                            </div>
+
+                            {/* {this.state.coins.map((coin, i) => <Carousel key={i} cryptos={this.state.coins} />)} */}
+                            {/* <ControlledCarousel cryptos={this.state.coins} /> */}
+                            {/* <Coin coins={this.state.coins} display={this.displayCryptoLeft} /> */}
                         </div>
-                        <div className='rightCoins'>
-                            {currentCoins.map((coin, i) => <div key={i} className="right-coin" onClick={() => this.displayCryptoRight(coin)}>{coin.symbol}</div>)}
+                        <div className='rightCoins dropdown'>
+
+                            <button className="dropbtn">Crypto Tokens</button>
+                            <div className="dropdown-content">
+                                {this.state.coins.map((coin, i) => <Coin key={i} className="right-coin" coin={coin} display={this.displayCryptoRight} />)}
+                            </div>
+                            {/* {this.state.coins.map((coin, i) => <div key={i} className="right-coin" onClick={() => this.displayCryptoRight(coin)}>{coin.symbol}</div>)} */}
+                            {/* <Coin coins={this.state.coins} display={this.displayCryptoRight} /> */}
                         </div>
                         
                     </div>
-                    <div className='pages'>
-                        {
-                            this.state.currentPage > 1 ?
-                                <button id='prev' onClick={(ev) => {this.handleClick(ev)}}>Prev</button>
-                            : 
-                                null
-                        }
-                        {
-                            this.state.currentPage <  Math.ceil(coins.length / coinsPerPage) ?
-                                <button id='next' onClick={(ev) => {this.handleClick(ev)}}>Next 30 -></button>
-                            : 
-                                null
-                        }
-                    </div>
+                    
                 </main>
             </>
         )

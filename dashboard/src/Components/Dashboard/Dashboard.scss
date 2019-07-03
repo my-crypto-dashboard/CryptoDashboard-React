@@ -7,6 +7,12 @@ main {
     width: 100%;
 }
 
+.coin {
+    background: $react-blue2;
+    padding: 1rem 1rem;
+    width: 5rem;
+}
+
 .forms {
     display: flex;
     justify-content: space-between;
