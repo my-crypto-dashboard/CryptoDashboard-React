@@ -1,9 +1,5 @@
 import React, {Component} from 'react';
 import './App.scss';
-<<<<<<< HEAD
-import HeaderNav from './HeaderNav.js';
-import Dashboard from './Dashboard';
-=======
 import NavBar from './Components/Navigation/NavBar'
 import { Route } from 'react-router-dom'
 import Favorites from './Components/Favorites/Favorites'
@@ -13,7 +9,6 @@ import Dashboard from './Components/Dashboard/Dashboard'
 import Home from './Components/Home/Home'
 import fire from './config/firebase';
 import firebase from 'firebase';
->>>>>>> b246ffb25715cf45bdea437f446a732510e1ba4f
 
 // import Footer from './Components/Footer/Footer'
 

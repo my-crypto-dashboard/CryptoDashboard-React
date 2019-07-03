@@ -11569,17 +11569,14 @@ wide-align@^1.1.0:
   dependencies:
     string-width "^1.0.2 || 2"
 
-<<<<<<< HEAD
 winwheel@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/winwheel/-/winwheel-1.0.1.tgz#6580cdee936469749caf19cd4071bd548eb466ac"
   integrity sha1-ZYDN7pNkaXScrxnNQHG9VI60Zqw=
-=======
 window-size@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/window-size/-/window-size-0.1.4.tgz#f8e1aa1ee5a53ec5bf151ffa09742a6ad7697876"
   integrity sha1-+OGqHuWlPsW/FR/6CXQqatdpeHY=
->>>>>>> b246ffb25715cf45bdea437f446a732510e1ba4f
 
 wordwrap@~0.0.2:
   version "0.0.3"
