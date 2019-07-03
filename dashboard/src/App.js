@@ -6,8 +6,10 @@ import Favorites from './Components/Favorites/Favorites'
 import About from './Components/About/About'
 import Wallets from './Components/Wallets/Wallets'
 import Dashboard from './Components/Dashboard/Dashboard'
+import Home from './Components/Home/Home'
 import fire from './config/firebase';
 import firebase from 'firebase';
+
 // import Footer from './Components/Footer/Footer'
 
 
@@ -17,7 +19,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      user: null
+      user: 'null'
     }
 
     this.addPair = this.addPair.bind(this);
@@ -97,10 +99,12 @@ class App extends Component {
     })
   }
 
+
   logout() {
     fire.auth().signOut()
     .then(res => {
       console.log(res);
+      setTimeout(() => window.location.pathname = '/dashboard', 1000)
     })
     .catch(err => {
       console.log(err);
@@ -117,12 +121,15 @@ class App extends Component {
        
       <div className="App">
       <NavBar user={this.state.user} login={this.login} logout={this.logout}/>
+      <Route exact path="/" render={ (props) => {
+            return(<Home {...props} />)
+          }} />
         <Route exact path="/dashboard" render={ (props) => {
             return(<Dashboard {...props} showCrypto={this.showCrypto} addPair={this.addPair} user={this.state.user}/>)
           }} />
         
         <Route exact path="/favorites" render={ (props) => {
-            return(<Favorites {...props}  ids={['bitcoin','ethereum','bitBTC']} />)
+            return(<Favorites {...props}  ids={['bitcoin','ethereum','bitBTC',"1irstcoin"]} />)
           }} />
         <Route exact path="/about" render={ (props) => {
             return(<About {...props} />)
