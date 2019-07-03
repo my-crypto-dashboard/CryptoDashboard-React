@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 
 
 
+
 class Wallets extends Component {
     constructor(props) {
       super(props);
@@ -13,8 +14,8 @@ class Wallets extends Component {
   
     render() {
       return (
-        <div >
-          <h1>Wallets Component</h1>
+        <div className={'chart'} >
+          <h1 style={{color:'#57b7bd'}}>Wallets Feature Coming Soon...</h1>
         </div>
       );
     }
