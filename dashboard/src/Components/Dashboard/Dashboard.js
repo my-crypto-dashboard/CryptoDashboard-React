@@ -1,3 +1,4 @@
+    
 import React from 'react';
 import axios from 'axios';
 import './Dashboard.scss';
@@ -11,8 +12,10 @@ class Dashboard extends React.Component {
         super(props);
 
         this.state = {
-            coins: []
+            coins: [],
+            cryptoPair: null
         }
+        this.baseState = this.state;
     }
 
     componentDidMount() {
@@ -23,101 +26,142 @@ class Dashboard extends React.Component {
             .catch(err => console.log(err))
     }
 
-    showCryptoPair = (leftcoin, rightcoin) => {
-        console.log('showcryptopair fired', leftcoin, rightcoin);
-        // let leftcoinID = Object.keys(this.state.cryptoLeft)[0];
-
-        // const leftcoinID = this.state.coins.filter(coin => coin.symbol === leftcoin)[0].id;
-        // console.log('showcryptopair leftcoinid', leftcoinID);
-        // this.setState({ leftcoinID });
-
-
-        axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${this.state.leftcoin.id}&vs_currencies=${rightcoin}`)
-            .then(res => {
-                console.log(res.data);
-                this.setState({ cryptoPair: res.data })
-            })
-            .catch(err => console.log(err));
+    componentWillUnmount() {
+        this.setState(this.baseState);
     }
 
     displayCryptoLeft = coin => {
+        console.log('displayCryptoLeft triggered');
+        this.setState({ leftcoin: null });  //why does setting state not work here, but it works inside the axios call?
 
-        axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${coin.id}&vs_currencies=usd`)
-            .then(res => {
-                console.log(res.data);
-                this.setState({ leftcoinUSD: res.data })
-            })
-            .catch(err => console.log(err));
+        if (coin) {
 
-        if (this.state.rightcoin) {
+            axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${coin.id}&vs_currencies=usd`)
+                .then(res => {
+                    this.setState({
+                        leftcoinUSD: res.data,
+                        leftcoin: coin
+                    })
+                })
+                .catch(err => console.log(err));
 
-            this.showCryptoPair(coin.symbol, this.state.rightcoin.symbol);
         }
-        console.log('left coin', coin);
-        this.setState({ leftcoin: coin });
-        // this.setState({ cryptoResult1: coin });
 
-        // if (this.state.cryptoRight) {  //if the right coin exists, call the crypto pair function, and pass in the symbol of both coins)
-        //     const leftcoin = this.state.coins.filter(leftCoin => leftCoin.id === coin.id)[0].symbol;
-        //     const rightcoin = this.state.coins.filter(rightCoin => rightCoin.id === Object.keys(this.state.cryptoRight)[0])[0].symbol;
-        //     console.log('right coin', rightcoin);
-        //     console.log('leftcoin', leftcoin);
-        //     // this.setState({ cryptoResult1: coin });
-        //     this.showCryptoPair(leftcoin, rightcoin);
+
+        // if (this.state.rightcoin && this.state.leftcoin) {
         // }
 
-        
+        if (this.state.rightcoin) {
+            this.showCryptoPair(coin, this.state.rightcoin);
+        }
+
     }
 
-    displayCryptoRight = coin => {
-        console.log('right coin123', coin);
-        this.setState({ rightcoin: coin });
-        // this.setState(state => ({ cryptoResult2: coin }));
+    displayCryptoRight = (coin) => {
+        console.log('displayCryptoRight triggered');
+        console.log('right coin', coin);
+        this.setState({ rightcoin: null });
+        console.log(this.state);
 
         axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${coin.id}&vs_currencies=usd`)
             .then(res => {
-                console.log(res.data);
-                this.setState({ rightcoinUSD: res.data })
+                this.setState({ rightcoinUSD: res.data, rightcoin: coin })
             })
             .catch(err => console.log(err));
+
+        // if (this.state.leftcoin && this.state.rightcoin) {
+        //     this.showCryptoPair(coin, this.state.leftcoin);
+        // }
+
+        console.log('leftcoin and rightcoin in displayCryptoRight', this.state.leftcoin, coin);
+
+        if (this.state.leftcoin) {
+            this.showCryptoPair(this.state.leftcoin, coin);
+        }
+
+
     }
 
     cryptoSearch(crypto, form) {
         console.log('cryptosearch triggered');
 
         const forms = document.querySelectorAll('form');
-        let rightcoin = forms[1].children[0].value;
-        let leftcoin = forms[0].children[0].value;
+        let rightCoinInput = forms[1].children[0].value;
+        let leftCoinInput = forms[0].children[0].value;
 
-        if (leftcoin && rightcoin) {
-            this.showCryptoPair(leftcoin, rightcoin);
+        const leftCoinFound = this.state.coins.filter(coin => coin.symbol === leftCoinInput)[0];
+        const rightCoinFound = this.state.coins.filter(coin => coin.symbol === rightCoinInput)[0];
+
+        console.log('leftCoinFound', leftCoinFound);
+        console.log('rightCoinFound', rightCoinFound);
+
+        if (leftCoinFound) {
+            this.setState({ leftcoin: leftCoinFound })
+            this.displayCryptoLeft(leftCoinFound);
         }
-        // forms.forEach( form => form.)
-        if (form.name === 'left-form') {
-            const leftcoin = this.state.coins.filter(coin => coin.symbol === crypto.value)[0];
 
-            this.setState({ leftcoin });
-            if (!leftcoin) {
-                alert('no crypto ticker found with that symbol. ')
-            } else {
-                this.displayCryptoLeft(leftcoin);
-            }
-        } else if (form.name === 'right-form') {
-            const rightcoin = this.state.coins.filter(coin => coin.symbol === crypto.value)[0];
-            this.setState({ rightcoin });
-            if (!rightcoin) {
-                alert('no crypto ticker found with that symbol. ', crypto.value);
-            } else {
-                this.displayCryptoRight(rightcoin);
-            }
+        if (rightCoinFound) {
+            this.setState({ rightcoin: rightCoinFound })
+            this.displayCryptoRight(rightCoinFound);
+        }
+
+        // if (leftCoinFound && rightCoinFound) {
+        //     this.showCryptoPair(leftCoinFound, rightCoinFound);
+        // }
+
+        if (leftCoinFound && rightCoinFound) {
+            this.showCryptoPair(leftCoinFound, rightCoinFound);
         }
     }
 
-    render() {
-        console.log('this.rightcoin', this.state.rightcoin);
-        console.log('this.leftcoin', this.state.leftcoin);
-        console.log('this.cryptoPair', this.state.cryptoPair);
+    //     if (leftCoinFound) {
+    //         this.setState({ leftcoin })
+    //     }
 
+    //     if (leftcoin && rightcoin) {
+    //         this.showCryptoPair(leftcoin, rightcoin);
+    //     }
+    //     // forms.forEach( form => form.)
+    //     if (form.name === 'left-form') {
+    //         const leftcoin = this.state.coins.filter(coin => coin.symbol === crypto.value)[0];
+
+    //         this.setState({ leftcoin });
+    //         if (!leftcoin) {
+    //             alert('no crypto ticker found with that symbol. ')
+    //         } else {
+    //             this.displayCryptoLeft(leftcoin);
+    //         }
+    //     } else if (form.name === 'right-form') {
+    //         const rightcoin = this.state.coins.filter(coin => coin.symbol === crypto.value)[0];
+    //         this.setState({ rightcoin });
+    //         if (!rightcoin) {
+    //             alert('no crypto ticker found with that symbol. ', crypto.value);
+    //         } else {
+    //             this.displayCryptoRight(rightcoin);
+    //         }
+    //     }
+    // }
+
+    showCryptoPair = (leftcoin, rightcoin) => {
+        console.log('showcryptopair fired', leftcoin, rightcoin);
+        // this.setState({ leftcoin, rightcoin });
+
+        // let leftcoinID = Object.keys(this.state.cryptoLeft)[0];
+
+        // const leftcoinID = this.state.coins.filter(coin => coin.symbol === leftcoin)[0].id;
+        // console.log('showcryptopair leftcoinid', leftcoinID);
+        // this.setState({ leftcoinID });
+
+        axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${leftcoin.id}&vs_currencies=${rightcoin.symbol}`)
+            .then(res => {
+                console.log('axios response data for cryptoPair', res.data);
+                this.setState({ cryptoPair: res.data });
+
+            })
+            .catch(err => console.log(err));
+    }
+
+    render() {
         return (
             <>
                 {/* <Wheel /> */}
@@ -135,6 +179,13 @@ class Dashboard extends React.Component {
                         <input name="cryptoTicker" placeholder="Crypto Ticker Symbol" />
                     </form>
 
+                    {(this.state.leftcoin && this.state.rightcoin && this.state.cryptoPair) && (
+                        <div className="middleData">
+                            <div>{this.state.leftcoin.symbol} / {this.state.rightcoin.symbol}</div>
+                            <div> {this.state.cryptoPair[this.state.leftcoin.id][this.state.rightcoin.symbol]}</div>
+                        </div>
+                    )}
+
                     <form name='right-form' onSubmit={(e) => {
                         e.preventDefault();
                         this.cryptoSearch(e.target[0], e.target);
@@ -145,21 +196,19 @@ class Dashboard extends React.Component {
 
                 <main>
                     <div className="data">
-                        {this.state.leftcoinUSD && (<div>
-                            <div>{Object.keys(this.state.leftcoinUSD)[0]}</div>
-                            <div>${Object.values(this.state.leftcoinUSD)[0]['usd']} usd</div>
-                            <div>  </div>
-                        </div>)}
+                        {this.state.leftcoinUSD && (
+                            <div className="leftData">
+                                <div>{Object.keys(this.state.leftcoinUSD)[0]}</div>
+                                <div>${Object.values(this.state.leftcoinUSD)[0]['usd']} usd</div>
+                                <div>  </div>
+                            </div>)}
 
-                        {(this.state.leftcoin && this.state.rightcoin && this.state.cryptoPair) && (
-                            <div>
-                                <div>{this.state.leftcoin.symbol} / {this.state.rightcoin.symbol}</div>
-                                <div> {this.state.cryptoPair[this.state.leftcoin.id][this.state.rightcoin.symbol]}</div>
-                            </div>
-                        )}
+
+
+                        {/* <div>{this.state.cryptoPair[this.state.leftcoin.id][this.state.rightcoin.symbol]}</div> */}
 
                         {this.state.rightcoinUSD && (
-                            <div>
+                            <div className="rightData">
                                 <div>{Object.keys(this.state.rightcoinUSD)[0]}</div>
                                 <div>${Object.values(this.state.rightcoinUSD)[0]['usd']} usd</div>
                             </div>)}
