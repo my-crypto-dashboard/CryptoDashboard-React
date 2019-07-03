@@ -6,6 +6,7 @@ import Favorites from './Components/Favorites/Favorites'
 import About from './Components/About/About'
 import Wallets from './Components/Wallets/Wallets'
 import Dashboard from './Components/Dashboard/Dashboard'
+import Home from './Components/Home/Home'
 import fire from './config/firebase';
 import firebase from 'firebase';
 
@@ -84,6 +85,7 @@ class App extends Component {
     fire.auth().signOut()
     .then(res => {
       console.log(res);
+      setTimeout(() => window.location.pathname = '/dashboard', 1000)
     })
     .catch(err => {
       console.log(err);
@@ -103,12 +105,15 @@ class App extends Component {
        
       <div className="App">
       <NavBar user={this.state.user} login={this.login} logout={this.logout}/>
+      <Route exact path="/" render={ (props) => {
+            return(<Home {...props} />)
+          }} />
         <Route exact path="/dashboard" render={ (props) => {
             return(<Dashboard {...props} showCrypto={this.showCrypto} />)
           }} />
         
         <Route exact path="/favorites" render={ (props) => {
-            return(<Favorites {...props} user={this.state.user.id} ids={['bitcoin','ethereum','bitBTC',"1irstcoin"]} />)
+            return(<Favorites {...props}  ids={['bitcoin','ethereum','bitBTC',"1irstcoin"]} />)
           }} />
         <Route exact path="/about" render={ (props) => {
             return(<About {...props} />)
