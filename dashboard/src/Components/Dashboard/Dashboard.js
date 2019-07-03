@@ -2,6 +2,10 @@
 import React from 'react';
 import axios from 'axios';
 import './Dashboard.scss';
+// import Slide from 'react-reveal/Slide';
+import Coin from './Coin';
+// import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+// import ControlledCarousel from './Carousel';
 // import Spin from './Spin';
 // import Wheel from './Wheel';
 // console.log(Wheel);
@@ -14,9 +18,16 @@ class Dashboard extends React.Component {
         this.state = {
             coins: [],
             cryptoPair: null,
-            favorite: false
+            favorite: false,
+            dropdownOpen: false
         }
         this.baseState = this.state;
+    }
+
+    toggle = () => {
+        this.setState(prevState => ({
+            dropdownOpen: !prevState.dropdownOpen
+        }));
     }
 
     componentDidMount() {
@@ -162,8 +173,6 @@ class Dashboard extends React.Component {
                         </div>
                     )}
 
-                    {/* {this.state.cryptoPair && <button onClick={() => this.favoriteToggle()}>Add to Favorites</button>} */}
-
                     <form name='right-form' onSubmit={(e) => {
                         e.preventDefault();
                         this.cryptoSearch(e.target[0], e.target);
@@ -192,11 +201,26 @@ class Dashboard extends React.Component {
                             </div>)}
                     </div>
                     <div className='coins'>
-                        <div className='leftCoins'>
-                            {this.state.coins.map((coin, i) => <div key={i} className="left-coin" onClick={() => this.displayCryptoLeft(coin)}>{coin.symbol}</div>)}
+                        <div className='leftCoins dropdown'>
+                            {/* {this.state.coins.map((coin, i) => <Slide left><div key={i} className="left-coin" onClick={() => this.displayCryptoLeft(coin)}>{coin.symbol}</div></Slide>)} */}
+                            <button className="dropbtn">Crypto Tokens</button>
+
+                            <div className="dropdown-content">
+                                {this.state.coins.map((coin, i) => <Coin key={i} className="left-coin" coin={coin} display={this.displayCryptoLeft} />)}
+                            </div>
+
+                            {/* {this.state.coins.map((coin, i) => <Carousel key={i} cryptos={this.state.coins} />)} */}
+                            {/* <ControlledCarousel cryptos={this.state.coins} /> */}
+                            {/* <Coin coins={this.state.coins} display={this.displayCryptoLeft} /> */}
                         </div>
-                        <div className='rightCoins'>
-                            {this.state.coins.map((coin, i) => <div key={i} className="right-coin" onClick={() => this.displayCryptoRight(coin)}>{coin.symbol}</div>)}
+                        <div className='rightCoins dropdown'>
+
+                            <button className="dropbtn">Crypto Tokens</button>
+                            <div className="dropdown-content">
+                                {this.state.coins.map((coin, i) => <Coin key={i} className="right-coin" coin={coin} display={this.displayCryptoRight} />)}
+                            </div>
+                            {/* {this.state.coins.map((coin, i) => <div key={i} className="right-coin" onClick={() => this.displayCryptoRight(coin)}>{coin.symbol}</div>)} */}
+                            {/* <Coin coins={this.state.coins} display={this.displayCryptoRight} /> */}
                         </div>
                     </div>
                 </main>

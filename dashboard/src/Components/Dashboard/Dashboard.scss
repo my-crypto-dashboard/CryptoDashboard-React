@@ -108,24 +108,70 @@ main {
     // border: 1px solid red;
     // @include on-circle(5046, 20rem, 6rem);
 
-    div.left-coins {
+    .left-coins {
         display: flex;
         flex-direction: column;
-        border: 1px solid green;
+        // border: 1px solid green;
         padding: 5px;
         margin: 5px;
-        align-self: flex-start;
+        align-self: center;
     }
 
-    div.right-coins {
-        display: flex;
-        flex-direction: column;
-        border: 1px solid pink;
-        padding: 5px;
-        margin: 5px;
-        align-self: flex-end;
+    .rightCoins.dropdown {
+        .dropdown-content {
+            position : absolute;
+            right : 0px;
+        }
+    }
+
+    .dropdown {
+        // border : 1px solid green;
+
+        button.dropbtn {
+            color : white;
+            border-radius : 0px;
+            height: 50px;
+            width : 100px;
+            margin: 10px;
+            cursor : pointer;
+            transition : 1s;
+        }
+
+        .dropdown-content {
+            // border: 1px solid red;
+            display : none;
+            position : absolute;
+            background-color : #f9f9f9;
+            // min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+
+            div {
+                // color : red;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+                background-color : $react-blue2;
+            }
+        }
+
+        &:hover .dropdown-content {
+            display: block;
+        }
+
+        &:hover .dropbtn {
+            background-color: $react-blue2;
+            color : $react-blue;
+            transition : 1s;
+        }
+
+        &:hover div {
+            cursor : pointer;
+        }
     }
 }
+
+
 
 
 
