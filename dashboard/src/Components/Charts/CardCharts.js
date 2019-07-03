@@ -100,7 +100,7 @@ const Chart = props => {
         .datum(data)
         .attr('fill', 'none')
         .attr('stroke', '#6049e6')
-        .attr('stroke-linjoin', 'round')
+        .attr('stroke-linejoin', 'round')
         .attr('stroke-linecap', 'round')
         .attr('stroke-width', 1.5)
         .attr('d', line);

@@ -106,7 +106,7 @@ class App extends Component {
     fire.auth().signOut()
     .then(res => {
       console.log(res);
-      setTimeout(() => window.location.pathname = '/dashboard', 1000)
+      setTimeout(() => window.location.pathname = '/', 1000)
     })
     .catch(err => {
       console.log(err);

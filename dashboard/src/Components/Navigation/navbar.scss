@@ -24,6 +24,7 @@ button {
     color: $navlinkColor;
     cursor : pointer;
     transition : .5s;
+    outline:none;
 
     &:hover {
         box-shadow: 0 1px 8px #57b7bd, 0 1px 1px #6049e6;  
