@@ -1,13 +1,25 @@
-$react-blue : #282c34;
-$react-blue2: #61dafb;
-
 .App {
   text-align: center;
+  background-color: #282c34;
+  height: 100%;
+  width:auto;
+  min-width:1080px;
+  min-height: 100vh;
+  margin: 0 ;
+  padding: 0;
+  
 }
 
 
-header {
-  background-color: $react-blue;
+.App-logo {
+  margin-top: 100px;
+
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.App-header {
+  // background-color: #282c34;
   // min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -15,19 +27,17 @@ header {
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-
-  nav {
-    display: flex;
-    justify-content : space-around;
-    width: 90%;
-
-    a{
-      color: $react-blue2;
-      text-decoration: none;
-    }
-
-  }
-
 }
 
+.App-link {
+  color: #61dafb;
+}
 
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
