@@ -224,6 +224,7 @@ class Dashboard extends React.Component {
                         {this.state.rightcoinUSD && (
                             <div className="rightData">
                                 <div>{Object.keys(this.state.rightcoinUSD)[0]}</div>
+                                
 C                            </div>)}
                     </div>
                     <div className='coins'>
