@@ -76,9 +76,10 @@ class Favorites extends Component {
                 
             </div>
             </div>
-        
-      );
-    }
+     
+
+    );
   }
-  
-  export default Favorites;
+}
+
+export default Favorites;

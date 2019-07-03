@@ -12,9 +12,8 @@ class FavoriteCard extends Component {
     super(props);
     this.state = {
       price: '',
-      
     };
-    
+
   }
 
     render (){
@@ -32,12 +31,9 @@ class FavoriteCard extends Component {
         
         <div className = {`chart${this.props.name}`} style={{paddingRight: '50px', width: '100%'}}><Chart name={this.props.name} pairs={this.props.pairs}/></div>   
       </div>
-      );
+    );
 
-      }
-
-      
-   
+  }
 };
 
 
