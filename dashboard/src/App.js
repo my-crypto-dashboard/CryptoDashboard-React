@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import './App.scss';
 import NavBar from './Components/Navigation/NavBar'
 import { Route } from 'react-router-dom'
@@ -37,7 +37,7 @@ class App extends Component {
 
   async addPair(pair1, pair2) {
     let db = await fire.firestore();
-    let pair = {1: pair1.id, 2: pair2.id};
+    let pair = { 1: pair1.id, 2: pair2.id };
     await db.collection("users")
         .doc(this.state.user.id)
         .update({ favorites: firebase.firestore.FieldValue.arrayUnion(pair)})
@@ -53,17 +53,17 @@ class App extends Component {
 
   authListener() {
     let db = fire.firestore();
-      fire.auth().onAuthStateChanged((user) => {
-        if(user) {
-          db
+    fire.auth().onAuthStateChanged((user) => {
+      if (user) {
+        db
           .collection("users")
           .doc(user.uid)
           .get().then(docSnapshot => {
-            this.setState({user: docSnapshot.data()});
+            this.setState({ user: docSnapshot.data() });
           })
-        
+
       } else {
-        this.setState({user:null});
+        this.setState({ user: null });
       }
     });
   }
@@ -72,34 +72,36 @@ class App extends Component {
     var provider = new firebase.auth.GoogleAuthProvider();
     let db = fire.firestore();
     return fire.auth()
-    .signInWithPopup(provider)
-    .then(async result => {
-      await db
-      .collection("users")
-      .doc(result.user.uid)
-      .get().then(docSnapshot => {
-        if(!docSnapshot.data()){
-            db.collection("users")
-            .doc(result.user.uid)
-            .set({
-              email: result.user.email,
-              id: result.user.uid,
-              favorites: []
-            });
-            this.setState({user: {
-              email: result.user.email,
-              id: result.user.uid,
-              favorites: []
-            }});
-        }
+      .signInWithPopup(provider)
+      .then(async result => {
+        await db
+          .collection("users")
+          .doc(result.user.uid)
+          .get().then(docSnapshot => {
+            if (!docSnapshot.data()) {
+              db.collection("users")
+                .doc(result.user.uid)
+                .set({
+                  email: result.user.email,
+                  id: result.user.uid,
+                  favorites: []
+                });
+              this.setState({
+                user: {
+                  email: result.user.email,
+                  id: result.user.uid,
+                  favorites: []
+                }
+              });
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          })
       })
       .catch(err => {
         console.log(err);
       })
-    })
-    .catch(err => {
-      console.log(err);
-    })
   }
 
 
@@ -113,43 +115,43 @@ class App extends Component {
       console.log(err);
     })
   }
-  
+
   showCrypto(coin) {
     console.dir(coin.value);
   }
 
-  
-  render(){
+
+  render() {
     return (
-       
+
       <div className="App">
-      <NavBar user={this.state.user} login={this.login} logout={this.logout}/>
-      <Route exact path="/" render={ (props) => {
-            return(<Home {...props} />)
-          }} />
-        <Route exact path="/dashboard" render={ (props) => {
-            return(<Dashboard {...props} showCrypto={this.showCrypto} addPair={this.addPair} user={this.state.user}/>)
-          }} />
-        
-        <Route exact path="/favorites" render={ (props) => {
-            return(<Favorites {...props}  favorites={(this.state.user.favorites)}/>)
-          }} />
-        <Route exact path="/about" render={ (props) => {
-            return(<About {...props} />)
-          }} />
-          <Route exact path="/wallets" render={ (props) => {
-            return(<Wallets {...props} />)
-          }} />
-        
+        <NavBar user={this.state.user} login={this.login} logout={this.logout} />
+        <Route exact path="/" render={(props) => {
+          return (<Home {...props} />)
+        }} />
+        <Route exact path="/dashboard" render={(props) => {
+          return (<Dashboard {...props} showCrypto={this.showCrypto} addPair={this.addPair} user={this.state.user} />)
+        }} />
+
+        <Route exact path="/favorites" render={(props) => {
+          return (<Favorites {...props} favorites={(this.state.user.favorites)} />)
+        }} />
+        <Route exact path="/about" render={(props) => {
+          return (<About {...props} />)
+        }} />
+        <Route exact path="/wallets" render={(props) => {
+          return (<Wallets {...props} />)
+        }} />
+
       </div>
-      
-      
+
+
     );
 
   }
 
-  
- 
+
+
 }
 
 export default App;
