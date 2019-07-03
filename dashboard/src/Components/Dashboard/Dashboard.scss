@@ -63,12 +63,21 @@ main {
     margin: 0 auto;
     color : white;
     background-color : $react-blue;
+    text-align: center;
 
     div {
         color : $navlinkColor;
         font-weight: bolder;
         font-size : 30px;
     }
+
+   .welcome-message {
+       font-weight: lighter;
+       text-align : center;
+       margin: 0 auto;
+   }
+
+
 }
 
 .coins {
@@ -142,6 +151,7 @@ main {
             // color : $react-blue;
             transition : .5s;
             box-shadow: 0 1px 4px #57b7bd, 0 1px 1px #6049e6;
+            cursor: context-menu;
         }
 
         &:hover div {
