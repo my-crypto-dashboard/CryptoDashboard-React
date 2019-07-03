@@ -43,6 +43,7 @@ class App extends Component {
         .update({ favorites: firebase.firestore.FieldValue.arrayUnion(pair)})
         .then((res) => {
           console.log(res);
+          this.setState({user: {favorites: [...this.state.user.favorites, pair]}});
         })
         .catch(err => {
           console.log(err);
@@ -106,7 +107,7 @@ class App extends Component {
     fire.auth().signOut()
     .then(res => {
       console.log(res);
-      setTimeout(() => window.location.pathname = '/dashboard', 1000)
+      setTimeout(() => window.location.pathname = '/', 1000)
     })
     .catch(err => {
       console.log(err);
