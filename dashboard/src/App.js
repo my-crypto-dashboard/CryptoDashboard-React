@@ -21,31 +21,18 @@ class App extends Component {
     }
   }
 
-  
 
   componentDidMount() {
     this.authListener();
-  }
+    
 
-  addPair() {
-    let db = fire.firestore();
-    let pair = ['bitcoin', 'eth']
-    return db.collection("users")
-        .doc(`${this.state.user.id}`) //<--- id of user who left erview, same as above, state.userId
-        .update({ favorites: firebase.firestore.FieldValue.arrayUnion(pair) })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch(err => {
-          console.log("error adding reviewid to reviews array in user");
-          return null;
-        });
   }
 
   authListener() {
     let db = fire.firestore();
       fire.auth().onAuthStateChanged((user) => {
         if(user) {
+          
           db
           .collection("users")
           .doc(user.uid)

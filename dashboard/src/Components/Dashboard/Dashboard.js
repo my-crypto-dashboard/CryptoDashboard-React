@@ -1,6 +1,7 @@
     
 import React from 'react';
 import axios from 'axios';
+import ReactPaginate from 'react-paginate';
 import './Dashboard.scss';
 // import Spin from './Spin';
 // import Wheel from './Wheel';
@@ -14,35 +15,52 @@ class Dashboard extends React.Component {
 
         this.state = {
             coins: [],
-            cryptoPair: null
+            cryptoPair: null,
+            currentPage: 1,
+            coinsPerPage: 30
         }
         this.baseState = this.state;
+
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick(event) {
+        console.log(event.target.id);
+            this.setState({
+            currentPage: (event.target.id === 'prev' ? this.state.currentPage - 1 : this.state.currentPage + 1)
+            })
     }
 
     componentDidMount() {
         axios.get('https://api.coingecko.com/api/v3/coins/list')
             .then(res => {
+                console.log(res.data)
                 this.setState({ coins: res.data })
             })
             .catch(err => console.log(err))
+    }
+
+    currencyConverter(coin, coin2) {
+        this.setState({cryptoPair: coin.usd / coin2.usd});
     }
 
     componentWillUnmount() {
         this.setState(this.baseState);
     }
 
-    displayCryptoLeft = coin => {
+    displayCryptoLeft = async(coin) => {
         console.log('displayCryptoLeft triggered');
-        this.setState({ leftcoin: null });  //why does setting state not work here, but it works inside the axios call?
-
+        await this.setState({ leftcoin: null });  //why does setting state not work here, but it works inside the axios call?
+        let coinData = null;
         if (coin) {
 
-            axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${coin.id}&vs_currencies=usd`)
+           await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${coin.id}&vs_currencies=usd`)
                 .then(res => {
                     this.setState({
                         leftcoinUSD: res.data,
                         leftcoin: coin
                     })
+                    coinData = res.data[coin.id];
                 })
                 .catch(err => console.log(err));
 
@@ -53,20 +71,24 @@ class Dashboard extends React.Component {
         // }
 
         if (this.state.rightcoin) {
-            this.showCryptoPair(coin, this.state.rightcoin);
+            console.log(coinData);
+            console.log(this.state.rightcoinUSD)
+            this.currencyConverter(coinData, this.state.rightcoinUSD[this.state.rightcoin.id])
         }
 
     }
 
-    displayCryptoRight = (coin) => {
+    displayCryptoRight = async(coin) => {
         console.log('displayCryptoRight triggered');
         console.log('right coin', coin);
-        this.setState({ rightcoin: null });
+        await this.setState({ rightcoin: null });
         console.log(this.state);
-
-        axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${coin.id}&vs_currencies=usd`)
+        let coinData = null;
+        await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${coin.id}&vs_currencies=usd`)
             .then(res => {
+                console.log(res);
                 this.setState({ rightcoinUSD: res.data, rightcoin: coin })
+                coinData = res.data[coin.id];
             })
             .catch(err => console.log(err));
 
@@ -77,13 +99,15 @@ class Dashboard extends React.Component {
         console.log('leftcoin and rightcoin in displayCryptoRight', this.state.leftcoin, coin);
 
         if (this.state.leftcoin) {
-            this.showCryptoPair(this.state.leftcoin, coin);
+            console.log(coinData);
+            console.log(this.state.leftcoin)
+            this.currencyConverter(this.state.leftcoinUSD[this.state.leftcoin.id], coinData)
         }
 
 
     }
 
-    cryptoSearch(crypto, form) {
+    async cryptoSearch (crypto, form) {
         console.log('cryptosearch triggered');
 
         const forms = document.querySelectorAll('form');
@@ -97,22 +121,19 @@ class Dashboard extends React.Component {
         console.log('rightCoinFound', rightCoinFound);
 
         if (leftCoinFound) {
-            this.setState({ leftcoin: leftCoinFound })
-            this.displayCryptoLeft(leftCoinFound);
+            await this.setState({ leftcoin: leftCoinFound })
+            await this.displayCryptoLeft(leftCoinFound);
         }
 
         if (rightCoinFound) {
-            this.setState({ rightcoin: rightCoinFound })
-            this.displayCryptoRight(rightCoinFound);
+            await this.setState({ rightcoin: rightCoinFound })
+            await this.displayCryptoRight(rightCoinFound);
         }
 
         // if (leftCoinFound && rightCoinFound) {
         //     this.showCryptoPair(leftCoinFound, rightCoinFound);
         // }
 
-        if (leftCoinFound && rightCoinFound) {
-            this.showCryptoPair(leftCoinFound, rightCoinFound);
-        }
     }
 
     //     if (leftCoinFound) {
@@ -163,6 +184,18 @@ class Dashboard extends React.Component {
     }
 
     render() {
+
+        const { coins, currentPage, coinsPerPage } = this.state;
+
+        const indexOfLastTodo = currentPage * coinsPerPage;
+        const indexOfFirstTodo = indexOfLastTodo - coinsPerPage;
+        const currentCoins = coins.slice(indexOfFirstTodo, indexOfLastTodo);
+
+        const pageNumbers = [];
+          for (let i = 1; i <= Math.ceil(coins.length / coinsPerPage); i++) {
+            pageNumbers.push(i);
+        }
+
         return (
             <>
                 {/* <Wheel /> */}
@@ -183,7 +216,7 @@ class Dashboard extends React.Component {
                     {(this.state.leftcoin && this.state.rightcoin && this.state.cryptoPair) && (
                         <div className="middleData">
                             <div>{this.state.leftcoin.symbol} / {this.state.rightcoin.symbol}</div>
-                            <div> {this.state.cryptoPair[this.state.leftcoin.id][this.state.rightcoin.symbol]}</div>
+                            <div> {this.state.cryptoPair}</div>
                         </div>
                     )}
 
@@ -211,16 +244,30 @@ class Dashboard extends React.Component {
                         {this.state.rightcoinUSD && (
                             <div className="rightData">
                                 <div>{Object.keys(this.state.rightcoinUSD)[0]}</div>
-                                <div>${Object.values(this.state.rightcoinUSD)[0]['usd']} usd</div>
-                            </div>)}
+C                            </div>)}
                     </div>
                     <div className='coins'>
                         <div className='leftCoins'>
-                            {this.state.coins.map((coin, i) => <div key={i} className="left-coin" onClick={() => this.displayCryptoLeft(coin)}>{coin.symbol}</div>)}
+                            {currentCoins.map((coin, i) => <div key={i} className="left-coin" onClick={() => this.displayCryptoLeft(coin)}>{coin.symbol}</div>)}
                         </div>
                         <div className='rightCoins'>
-                            {this.state.coins.map((coin, i) => <div key={i} className="right-coin" onClick={() => this.displayCryptoRight(coin)}>{coin.symbol}</div>)}
+                            {currentCoins.map((coin, i) => <div key={i} className="right-coin" onClick={() => this.displayCryptoRight(coin)}>{coin.symbol}</div>)}
                         </div>
+                        
+                    </div>
+                    <div className='pages'>
+                        {
+                            this.state.currentPage > 1 ?
+                                <button id='prev' onClick={(ev) => {this.handleClick(ev)}}>Prev</button>
+                            : 
+                                null
+                        }
+                        {
+                            this.state.currentPage <  Math.ceil(coins.length / coinsPerPage) ?
+                                <button id='next' onClick={(ev) => {this.handleClick(ev)}}>Next 30 -></button>
+                            : 
+                                null
+                        }
                     </div>
                 </main>
             </>
