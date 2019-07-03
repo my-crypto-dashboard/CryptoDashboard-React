@@ -8,26 +8,31 @@ class Favorites extends Component {
     constructor(props) {
       super(props);
       this.state = {
-        favoritesObj: []
+        temp2: null
       };
 }
 
     async componentDidMount(){
-        let newTemp = []
-        this.props.favorites.forEach(item => {
-          newTemp.push(item[1])
-          newTemp.push(item[2])
+        let temp = [];
+        this.props.favorites.forEach(pair => {
+          temp.push(pair[1]);
+          temp.push(pair[2]);
         });
+        let temp2 = [];
         await axios
-        .get(`https://api.coingecko.com/api/v3/simple/price?ids=${newTemp}&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true`)
+        .get(`https://api.coingecko.com/api/v3/simple/price?ids=${temp}&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true`)
         .then (response => {
-          let value =  Object.entries(response.data).map(([key, value]) => {
-            const newValue = Object.assign({name:key}, value) 
-            return newValue;
+          for(let i = 0; i < temp.length; i+=2) {
+           
+            temp2.push([response.data[temp[i]], response.data[temp[i+1]]]);
+          }
+
+          if(temp2.length > 0){
+            this.setState({temp2})
+          }
+          
           })
-          this.setState({
-            favoritesObj: value});
-          })
+          
         .catch(err => {
             console.log(err);
         })
@@ -36,21 +41,29 @@ class Favorites extends Component {
     
   
     render() {
-
-      console.log(this.state.favoritesObj)
+      console.log(this.state.temp2)
       return (
         <div class={'favorites'}>
           <div>
           {         
             this.props.favorites.map((favorite,index) => { 
-              
+            let currPrice = (this.state.temp2 != null ? (this.state.temp2[index][0].usd / this.state.temp2[index][1].usd) : 0);
+            let currChange = (this.state.temp2 != null ? 
+              (
+                (this.state.temp2[index][0].usd * ( 1 + this.state.temp2[index][0].usd_24h_change))
+                / 
+                (this.state.temp2[index][1].usd * ( 1 + this.state.temp2[index][1].usd_24h_change))
+                /currPrice)
+                :
+                0
+            )
+            
             return (
               <FavoriteCard 
               displayName={`${favorite[1]} / ${favorite[2]}`}
               name= {`${favorite[1]}${favorite[2]}`}
-              /*
-              change ={favorite.newValue.usd_24h_change}
-              */
+              price={currPrice}
+              change={currChange}
               pairs={favorite}
               
               >
