@@ -19,6 +19,7 @@ class FavoriteCard extends Component {
     render (){
       return(
       <div className={'card-1'}>  
+
       <p className={'header1'}>{this.props.name.toUpperCase()}</p>
       <div style={{width:'50%', textAlign:'left', marginLeft:'45%'}}>
       <span style={{color:'#57b7bd'}}>24hr. Change:</span> <span style={{ }}>{Math.round(this.props.change*100)/100} %</span>  
