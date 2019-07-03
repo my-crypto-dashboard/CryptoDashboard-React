@@ -223,7 +223,8 @@ class Dashboard extends React.Component {
                         {this.state.rightcoinUSD && (
                             <div className="rightData">
                                 <div>{Object.keys(this.state.rightcoinUSD)[0]}</div>
-C                            </div>)}
+                                <div>${Object.values(this.state.rightcoinUSD)[0]['usd']}usd</div>
+                            </div>)}
                     </div>
                     <div className='coins'>
                         <div className='leftCoins'>
