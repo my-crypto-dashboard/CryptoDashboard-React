@@ -1,4 +1,3 @@
-
 import React from 'react';
 import axios from 'axios';
 import './Dashboard.scss';
@@ -189,8 +188,6 @@ class Dashboard extends React.Component {
                                 <div>${Object.values(this.state.leftcoinUSD)[0]['usd']} usd</div>
                                 <div>  </div>
                             </div>)}
-
-
 
                         {/* <div>{this.state.cryptoPair[this.state.leftcoin.id][this.state.rightcoin.symbol]}</div> */}
 

@@ -1,0 +1,94 @@
+$whiteColor:  #a4a4a4;
+$separator: #7e8386;
+
+.header{
+    background-color: rgb(18, 21, 23);
+    padding: 0 0 80px 0;
+}
+
+.header h3 {
+    text-align: center;
+    width: 100%;
+    margin: 2px 0 0 0;
+    padding: 40px 0 0 0;
+    background-clip: text;
+    color: transparent;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 16px;
+    letter-spacing: 4px;
+    background-image: linear-gradient(90deg, rgb(106, 17, 203) 0%, rgb(37, 117, 252) 100%);
+}
+
+.header p {
+    text-align: center;
+    margin: 2rem 18rem 0;
+    line-height: 1.625em;
+    letter-spacing: 0.5px;
+    font-size: 24px;
+    font-weight: bold;
+    color: $whiteColor;
+}
+
+.team-section{
+    padding: 0 0 0 60px;
+}
+
+.section-header{
+    margin: 0 0 40px;
+}
+
+.section-header h4{
+    background-clip: text;
+    color: $whiteColor;
+    font-size: 16px;
+    letter-spacing: 4px;
+    margin-top: 80px;
+    text-transform: uppercase;
+}
+
+.section-header .separator{
+    height: 1px;
+    margin-top: 14px;
+    width: 77px;
+    border-top: 1px solid $separator;
+}
+.image-section{
+    flex-direction: column;
+    padding-bottom: 20px;
+}
+
+.image-container{
+    display: flex;
+    // flex-flow: row nowrap;
+}
+
+.image-box{
+    padding-bottom: 36px;
+    padding-right: 36px;
+    width: 25%;
+}
+
+.image-box .avatar{
+    border-radius: 11px;
+}
+
+
+.image-box:hover .avatar {
+    opacity: 0.2;
+    
+}
+
+.image-box p{
+    margin: 17px 0 8px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.image-box .icon-gh{
+    margin: 0 0 0 10px;
+}
+
+
+
