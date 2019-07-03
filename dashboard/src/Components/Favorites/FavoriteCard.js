@@ -24,7 +24,7 @@ class FavoriteCard extends Component {
         <p className={'header1'}>{this.props.displayName.toUpperCase()}</p>
         <span style={{color:'#57b7bd'}}>24hr. Change:</span> <span style={{ }}>{Math.round(this.props.change)} %</span> 
         <p></p>
-        <span style={{color:'#57b7bd'}}>Current Price:</span>  <span>{this.props.price} {this.props.displayName.toUpperCase()}</span>
+        <span style={{color:'#57b7bd'}}>Current Price:</span>  <span>{this.props.price.toFixed(2)} {this.props.displayName.toUpperCase()}</span>
         <p></p>
         {/*
         <span style={{color:'#57b7bd'}}>Market Cap:</span>  <span> {millify(Math.round(this.props.mCap))}</span>
