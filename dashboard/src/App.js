@@ -19,20 +19,37 @@ class App extends Component {
     this.state = {
       user: null
     }
+
+    this.addPair = this.addPair.bind(this);
+    this.authListener = this.authListener.bind(this);
+    this.login = this.login.bind(this);
+    this.showCrypto = this.showCrypto.bind(this);
   }
 
 
   componentDidMount() {
     this.authListener();
-    
+  }
 
+  async addPair(pair1, pair2) {
+    let db = await fire.firestore();
+    let pair = {firstPair: pair1.id, secondPair: pair2.id};
+    await db.collection("users")
+        .doc(this.state.user.id)
+        .update({ favorites: firebase.firestore.FieldValue.arrayUnion(pair)})
+        .then((res) => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+  
   }
 
   authListener() {
     let db = fire.firestore();
       fire.auth().onAuthStateChanged((user) => {
         if(user) {
-          
           db
           .collection("users")
           .doc(user.uid)
@@ -93,14 +110,15 @@ class App extends Component {
   showCrypto(coin) {
     console.dir(coin.value);
   }
-  render(){
 
+  
+  render(){
     return (
        
       <div className="App">
       <NavBar user={this.state.user} login={this.login} logout={this.logout}/>
         <Route exact path="/dashboard" render={ (props) => {
-            return(<Dashboard {...props} showCrypto={this.showCrypto} />)
+            return(<Dashboard {...props} showCrypto={this.showCrypto} addPair={this.addPair} user={this.state.user}/>)
           }} />
         
         <Route exact path="/favorites" render={ (props) => {

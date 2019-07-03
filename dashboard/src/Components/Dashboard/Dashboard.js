@@ -217,6 +217,12 @@ class Dashboard extends React.Component {
                         <div className="middleData">
                             <div>{this.state.leftcoin.symbol} / {this.state.rightcoin.symbol}</div>
                             <div> {this.state.cryptoPair}</div>
+                            {this.props.user ?
+                                <button onClick={() => this.props.addPair(this.state.leftcoin, this.state.rightcoin)
+                                }>Add to Favorites</button>
+                                :
+                                null
+                            }
                         </div>
                     )}
 
