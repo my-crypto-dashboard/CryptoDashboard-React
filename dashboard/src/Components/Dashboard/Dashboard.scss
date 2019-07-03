@@ -111,7 +111,10 @@ main {
 
         .dropdown-content {
             // border: 1px solid red;
-            display : none;
+            // display : none;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 1s, opacity 1s linear;
             position : absolute;
             background-color : #f9f9f9;
             // min-width: 160px;
@@ -128,14 +131,16 @@ main {
         }
 
         &:hover .dropdown-content {
-            display: block;
+            // display: block;
+            visibility : visible;
+            opacity: 1;
             border : 5px solid $react-blue;
         }
 
         &:hover .dropbtn {
             // background-color: $react-blue2;
             // color : $react-blue;
-            transition : 1s;
+            transition : .5s;
             box-shadow: 0 1px 4px #57b7bd, 0 1px 1px #6049e6;
         }
 
