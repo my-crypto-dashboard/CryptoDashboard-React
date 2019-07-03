@@ -14,14 +14,15 @@ main {
     align-items : center;
 
     input {
+        border-radius: 5px;
         margin: 10px;
-        height: 75px;
+        height: 30px;
         width: 45%;
         text-align : center;
         font-size: 20px;
         border: 1px solid $react-blue2;
         background-color: $react-blue;
-        color : white;
+        color : #6049e6;
         padding: 20px;
     }
 
@@ -35,7 +36,6 @@ main {
         padding : 20px;
         // background-color : $react-blue2;
         color : $navlinkColor;
-        font-weight: bolder;
         font-size : 30px;
         margin: 20px;
 
@@ -52,7 +52,8 @@ main {
 
 .data {
     display: flex;
-    justify-content: space-between;
+    border-radius: 5px;
+    justify-content: space-around;
     border: 1px solid $navlinkColor;
     width: 90%;
     padding: 10px;
@@ -62,8 +63,9 @@ main {
     text-align: center;
 
     div {
+        border-radius: 5px;
         color : $navlinkColor;
-        font-weight: bolder;
+        
         font-size : 30px;
     }
 
@@ -78,9 +80,11 @@ main {
 
 .coins {
     display: flex;
+    
     // flex-wrap: wrap;
     flex-direction: row;
-    justify-content : space-between;
+    color: #6049e6;
+    justify-content : space-around;
 
     // border: 1px solid green;
     // @include on-circle(5046, 20rem, 6rem);
@@ -90,6 +94,7 @@ main {
         flex-direction: column;
         // border: 1px solid green;
         padding: 5px;
+        padding-left: 35px;
         margin: 5px;
         align-self: center;
     }

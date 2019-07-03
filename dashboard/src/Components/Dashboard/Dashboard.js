@@ -181,7 +181,7 @@ class Dashboard extends React.Component {
                         e.preventDefault();
                         this.cryptoSearch(e.target[0], e.target);
                     }}>
-                        <input name="cryptoTicker" placeholder="Crypto Ticker Symbol" />
+                        <input name="cryptoTicker" placeholder="Crypto " />
                     </form>
 
                     {(this.state.leftcoin && this.state.rightcoin && this.state.cryptoPair) && (
@@ -203,7 +203,7 @@ class Dashboard extends React.Component {
                         e.preventDefault();
                         this.cryptoSearch(e.target[0], e.target);
                     }}>
-                        <input name="cryptoTicker" placeholder="Crypto Ticker Symbol" />
+                        <input name="cryptoTicker" placeholder="Crypto " />
                     </form>
                 </div>
 
