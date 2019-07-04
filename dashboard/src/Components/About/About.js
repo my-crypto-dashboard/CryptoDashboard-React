@@ -91,7 +91,7 @@ The market prices can be paired off with your choice and make a list of prices a
               <img className="avatar" src="https://avatars0.githubusercontent.com/u/30554629?s=460&v=4" alt="" style={{width: "200px"}}/>
               <p>Amir Yunas</p>
 
-              <a href="#">
+              <a href="https://www.linkedin.com/in/amiryunas/">
               <img src={iconLinkedin} className="icon-in" alt=""  style={{width: "24px"}} />
               </a>
 

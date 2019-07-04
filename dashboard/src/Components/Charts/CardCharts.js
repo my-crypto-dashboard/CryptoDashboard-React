@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import * as d3 from 'd3';
 import axios from 'axios';
 
@@ -10,8 +10,8 @@ const Chart = props => {
     axios.get(`https://api.coingecko.com/api/v3/coins/${props.name}//market_chart?vs_currency=usd&days=30`)
     .then(res => {
         let priceData = res.data.prices;
-        let marketCapData = res.data.market_caps;
-        let volumeData = res.data.total_volumes;
+        // let marketCapData = res.data.market_caps;
+        // let volumeData = res.data.total_volumes;
         let svgHeight = 400;
         let svgWidth = 800;
         let margin = {top: 20, right: 20, bottom: 30, left: 150}
@@ -34,7 +34,7 @@ const Chart = props => {
         let y = d3.scaleLinear().rangeRound([height, 0]);
         let x = d3.scaleTime().rangeRound([0, width]);  
         
-        let y2 = d3.scaleLinear().rangeRound([height, 0]);
+        // let y2 = d3.scaleLinear().rangeRound([height, 0]);
 
         let line = d3.line().x(function(d) {return x(d[0])}).y(function(d) { return y(d[1])})
                             x.domain([minDate, maxDate])
