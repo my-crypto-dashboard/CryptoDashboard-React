@@ -11,7 +11,7 @@ const Home = () => {
 return (
 
     <div  style={{display:'flex', flexDirection: 'column', alignItems:'center'}}>
-        <img src={logo} style={{ marginTop: '100px',height: '250px'}}/>
+        <img src={logo} alt="cryptdash logo" style={{ marginTop: '100px',height: '250px'}}/>
         <button onClick={update} style={{width:'300px', padding: '20px 0', fontSize:'25px'}}>Get Started</button>
         <p style={{color:"#57b7bd"}}><i>"The future of money is digital currency" - Bill Gates</i></p>
     </div>

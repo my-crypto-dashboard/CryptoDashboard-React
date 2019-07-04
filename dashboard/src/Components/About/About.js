@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {NavLink} from 'react-router-dom';
-import { Link } from "react-router-dom";
 
 import '../About/About.scss'
 import Grid from '@material-ui/core/Grid';
@@ -52,11 +51,11 @@ The market prices can be paired off with your choice and make a list of prices a
               <p>Brandon Allison</p>
 
               <a href="https://www.linkedin.com/in/brandon-allison-129987124/">
-              <img src={iconLinkedin} className="icon-in"  style={{width: "24px"}} />
+              <img src={iconLinkedin} className="icon-in" alt="" style={{width: "24px"}} />
               </a>
 
               <a href="https://github.com/orgs/my-crypto-dashboard/people/BrandonJAllison">
-              <img className="icon-gh" src={iconGithub} style={{width: "24px"}} />
+              <img className="icon-gh" src={iconGithub} alt="" style={{width: "24px"}} />
               </a>
             </div>
             
@@ -66,11 +65,11 @@ The market prices can be paired off with your choice and make a list of prices a
               <p>Bryan Garcia-Felix</p>
 
               <a href="https://www.linkedin.com/in/bryan-garciafelix/">
-              <img src={iconLinkedin} className="icon-in"  style={{width: "24px"}} />
+              <img src={iconLinkedin} className="icon-in" alt=""  style={{width: "24px"}} />
               </a>
 
               <a href="https://github.com/Bryan-GF">
-              <img className="icon-gh" src={iconGithub} style={{width: "24px"}} />
+              <img className="icon-gh" src={iconGithub} alt="" style={{width: "24px"}} />
               </a>
             </div>
 
@@ -79,25 +78,25 @@ The market prices can be paired off with your choice and make a list of prices a
               <p>Itel Domingo</p>
 
               <a href="https://www.linkedin.com/in/iteldomingo">
-              <img src={iconLinkedin} className="icon-in"  style={{width: "24px"}} />
+              <img src={iconLinkedin} className="icon-in" alt=""  style={{width: "24px"}} />
               </a>
 
               <a href="https://github.com/iteldomingo">
-              <img className="icon-gh" src={iconGithub} style={{width: "24px"}} />
+              <img className="icon-gh" src={iconGithub} alt="" style={{width: "24px"}} />
               </a>
 
             </div>
 
             <div className="image-box">
-              <img className="avatar" src="https://avatars0.githubusercontent.com/u/30554629?s=460&v=4" alt=""style={{width: "200px"}}/>
+              <img className="avatar" src="https://avatars0.githubusercontent.com/u/30554629?s=460&v=4" alt="" style={{width: "200px"}}/>
               <p>Amir Yunas</p>
 
               <a href="#">
-              <img src={iconLinkedin} className="icon-in"  style={{width: "24px"}} />
+              <img src={iconLinkedin} className="icon-in" alt=""  style={{width: "24px"}} />
               </a>
 
               <a href="https://github.com/ayunas">
-              <img className="icon-gh" src={iconGithub} style={{width: "24px"}} />
+              <img className="icon-gh" src={iconGithub} alt="" style={{width: "24px"}} />
               </a>
 
             </div>
