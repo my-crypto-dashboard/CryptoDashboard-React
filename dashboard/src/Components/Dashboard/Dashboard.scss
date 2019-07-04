@@ -1,7 +1,8 @@
 $react-blue : #282c34;
 $react-blue2: #61dafb;
 $navlinkColor: rgb(87, 183, 189);
-$logoblue: #6049e6;;
+$logoblue: #6049e6;
+$whiteColor: #ccc;
 
 
 main {
@@ -22,7 +23,7 @@ main {
         font-size: 20px;
         border: 1px solid $react-blue2;
         background-color: $react-blue;
-        color : white;
+        color : $whiteColor;
         padding: 20px;
     }
 
@@ -43,7 +44,7 @@ main {
         button {
             padding: 10px;
             margin: 10px;
-            color : white;
+            color : $whiteColor;
             width: 25%;
             align-self : center;
             cursor : pointer;
@@ -61,7 +62,7 @@ main {
     width: 90%;
     padding: 10px;
     margin: 0 auto;
-    color : white;
+    color : $whiteColor;
     background-color : $react-blue;
     text-align: center;
 
@@ -109,7 +110,7 @@ main {
         // border : 1px solid green;
 
         button.dropbtn {
-            color : white;
+            color : $whiteColor;
             border-radius : 0px;
             height: 50px;
             width : 150px;
