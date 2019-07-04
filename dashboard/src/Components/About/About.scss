@@ -79,7 +79,8 @@ $nav-menu: #57b7bd;
 }
 
 
-.image-box:hover .avatar {
+.image-box .avatar:hover {
+    cursor: pointer;
     opacity: 0.2;
     
 }
