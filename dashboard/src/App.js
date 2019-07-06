@@ -25,9 +25,11 @@ class App extends Component {
     }
 
     this.addPair = this.addPair.bind(this);
+    this.removeFavorite = this.removeFavorite.bind(this);
     this.authListener = this.authListener.bind(this);
     this.login = this.login.bind(this);
     this.showCrypto = this.showCrypto.bind(this);
+
   }
 
 
@@ -39,17 +41,31 @@ class App extends Component {
     let db = await fire.firestore();
     let pair = { 1: pair1.id, 2: pair2.id };
     await db.collection("users")
-        .doc(this.state.user.id)
-        .update({ favorites: firebase.firestore.FieldValue.arrayUnion(pair)})
-        .then((res) => {
-          console.log(res);
-          this.setState({user: {favorites: [...this.state.user.favorites, pair]}});
-        })
-        .catch(err => {
-          console.log(err);
-        });
-  
+      .doc(this.state.user.id)
+      .update({ favorites: firebase.firestore.FieldValue.arrayUnion(pair) })
+      .then((res) => {
+        console.log(res);
+        this.setState({ user: { favorites: [...this.state.user.favorites, pair] } });
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
+
+  async removeFavorite(pair) {
+    console.log('removeFavorite triggered');
+    console.log('pair to delete', pair)
+    let db = await fire.firestore();
+    await db.collection("users")
+      .doc(this.state.user.id)
+      .delete(pair)
+      .then(res => {
+        console.log(res.data);
+        this.setState({ user: { favorites: [...this.state.user.favorites] } })
+      })
+      .catch(err => console.log(err.message));
+  }
+
 
   authListener() {
     let db = fire.firestore();
@@ -107,13 +123,13 @@ class App extends Component {
 
   logout() {
     fire.auth().signOut()
-    .then(res => {
-      console.log(res);
-      setTimeout(() => window.location.pathname = '/', 1000)
-    })
-    .catch(err => {
-      console.log(err);
-    })
+      .then(res => {
+        console.log(res);
+        setTimeout(() => window.location.pathname = '/', 1000)
+      })
+      .catch(err => {
+        console.log(err);
+      })
   }
 
   showCrypto(coin) {
@@ -134,7 +150,7 @@ class App extends Component {
         }} />
 
         <Route exact path="/favorites" render={(props) => {
-          return (<Favorites {...props} favorites={(this.state.user.favorites)} />)
+          return (<Favorites {...props} favorites={(this.state.user.favorites)} remove={this.removeFavorite} />)
         }} />
         <Route exact path="/about" render={(props) => {
           return (<About {...props} />)
@@ -144,7 +160,6 @@ class App extends Component {
         }} />
 
       </div>
-
 
     );
 

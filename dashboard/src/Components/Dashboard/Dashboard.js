@@ -48,30 +48,29 @@ class Dashboard extends React.Component {
             .catch(err => console.log(err))
     }
 
-    currencyConverter(coin, coin2) {
-        this.setState({ cryptoPair: coin.usd / coin2.usd });
+    currencyConverter(leftcoin, rightcoin) {
+        this.setState({ cryptoPair: leftcoin.usd / rightcoin.usd });
     }
 
     componentWillUnmount() {
         this.setState(this.baseState);
     }
 
-    displayCryptoLeft = async (coin) => {
+    displayCryptoLeft = async (leftcoin) => {
         console.log('displayCryptoLeft triggered');
         await this.setState({ leftcoin: null });  //why does setting state not work here, but it works inside the axios call?
         let coinData = null;
-        if (coin) {
+        if (leftcoin) {
 
-            await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${coin.id}&vs_currencies=usd`)
+            await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${leftcoin.id}&vs_currencies=usd`)
                 .then(res => {
                     this.setState({
                         leftcoinUSD: res.data,
-                        leftcoin: coin
+                        leftcoin: leftcoin
                     })
-                    coinData = res.data[coin.id];
+                    coinData = res.data[leftcoin.id];
                 })
                 .catch(err => console.log(err));
-
         }
 
 
@@ -86,17 +85,17 @@ class Dashboard extends React.Component {
 
     }
 
-    displayCryptoRight = async (coin) => {
+    displayCryptoRight = async (rightcoin) => {
         console.log('displayCryptoRight triggered');
-        console.log('right coin', coin);
+        console.log('right coin', rightcoin);
         await this.setState({ rightcoin: null });
         console.log(this.state);
         let coinData = null;
-        await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${coin.id}&vs_currencies=usd`)
+        await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${rightcoin.id}&vs_currencies=usd`)
             .then(res => {
                 console.log(res);
-                this.setState({ rightcoinUSD: res.data, rightcoin: coin })
-                coinData = res.data[coin.id];
+                this.setState({ rightcoinUSD: res.data, rightcoin: rightcoin })
+                coinData = res.data[rightcoin.id];
             })
             .catch(err => console.log(err));
 
@@ -104,7 +103,7 @@ class Dashboard extends React.Component {
         //     this.showCryptoPair(coin, this.state.leftcoin);
         // }
 
-        console.log('leftcoin and rightcoin in displayCryptoRight', this.state.leftcoin, coin);
+        console.log('leftcoin and rightcoin in displayCryptoRight', this.state.leftcoin, rightcoin);
 
         if (this.state.leftcoin) {
             console.log(coinData);

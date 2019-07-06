@@ -16,20 +16,22 @@ class FavoriteCard extends Component {
 
   }
 
-    render (){
-      
-      return(
-      <div className={'card-1'}>  
+  render() {
+
+    return (
+      <div className={'card-1'}>
+        <button onClick={() => this.props.remove(this.props.favorite)}>Remove Favorite</button>
         <p className={'header1'}>{this.props.displayName.toUpperCase()}</p>
-        <span style={{color:'#57b7bd'}}>24hr. Change:</span> <span style={{ }}>{Math.round(this.props.change)} %</span> 
+        <span style={{ color: '#57b7bd' }}>24hr. Change:</span> <span style={{}}>{Math.round(this.props.change)} %</span>
         <p></p>
-        <span style={{color:'#57b7bd'}}>Current Price:</span>  <span>{this.props.price.toFixed(2)} {this.props.displayName.toUpperCase()}</span>
+        <span style={{ color: '#57b7bd' }}>Current Price:</span>  <span>{this.props.price.toFixed(2)} {this.props.displayName.toUpperCase()}</span>
         <p></p>
         {/*
         <span style={{color:'#57b7bd'}}>Market Cap:</span>  <span> {millify(Math.round(this.props.mCap))}</span>
         */}
-        
-        <div className = {`chart${this.props.name}`} style={{paddingRight: '50px', width: '100%'}}><Chart name={this.props.name} pairs={this.props.pairs}/></div>   
+
+        <div className={`chart${this.props.name}`} style={{ paddingRight: '50px', width: '100%' }}><Chart name={this.props.name} pairs={this.props.pairs} /></div>
+
       </div>
     );
 
