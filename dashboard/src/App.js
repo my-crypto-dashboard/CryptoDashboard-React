@@ -53,14 +53,12 @@ class App extends Component {
   }
 
   async removeFavorite(pair) {
-    console.log('removeFavorite triggered');
-    console.log('pair to delete', pair)
     let db = await fire.firestore();
     await db.collection("users")
       .doc(this.state.user.id)
-      .delete(pair)
+      .update({"favorites":
+                firebase.firestore.FieldValue.arrayRemove(pair)})
       .then(res => {
-        console.log(res.data);
         this.setState({ user: { favorites: [...this.state.user.favorites] } })
       })
       .catch(err => console.log(err.message));
@@ -79,7 +77,8 @@ class App extends Component {
           })
 
       } else {
-        this.setState({ user: null });
+        this.setState({ user: null
+        });
       }
     });
   }
@@ -150,7 +149,7 @@ class App extends Component {
         }} />
 
         <Route exact path="/favorites" render={(props) => {
-          return (<Favorites {...props} favorites={(this.state.user.favorites)} remove={this.removeFavorite} />)
+          return (<Favorites {...props} favorites={(this.state.user ? this.state.user.favorites : [])} remove={this.removeFavorite} />)
         }} />
         <Route exact path="/about" render={(props) => {
           return (<About {...props} />)
