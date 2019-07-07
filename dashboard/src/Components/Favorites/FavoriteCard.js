@@ -22,9 +22,9 @@ class FavoriteCard extends Component {
       <div className={'card-1'}>
         <button onClick={() => this.props.remove(this.props.favorite)}>Remove Favorite</button>
         <p className={'header1'}>{this.props.displayName.toUpperCase()}</p>
-        <span style={{ color: '#57b7bd' }}>24hr. Change:</span> <span style={{}}>{Math.round(this.props.change)} %</span>
+        <span style={{ color: '#57b7bd' }}>24hr. Change:</span> <span style={{}}>{this.props.change} %</span>
         <p></p>
-        <span style={{ color: '#57b7bd' }}>Current Price:</span>  <span>{this.props.price.toFixed(2)} {this.props.displayName.toUpperCase()}</span>
+        <span style={{ color: '#57b7bd' }}>Current Price:</span>  <span>{this.props.price} {this.props.displayName.toUpperCase()}</span>
         <p></p>
         {/*
         <span style={{color:'#57b7bd'}}>Market Cap:</span>  <span> {millify(Math.round(this.props.mCap))}</span>
