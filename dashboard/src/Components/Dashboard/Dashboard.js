@@ -42,7 +42,7 @@ class Dashboard extends React.Component {
     componentDidMount() {
         axios.get('https://api.coingecko.com/api/v3/coins/list')
             .then(res => {
-                console.log(res.data)
+                // console.log(res.data)
                 this.setState({ coins: res.data })
             })
             .catch(err => console.log(err))

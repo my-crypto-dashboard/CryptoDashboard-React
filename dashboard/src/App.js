@@ -58,7 +58,7 @@ class App extends Component {
     let db = await fire.firestore();
     await db.collection("users")
       .doc(this.state.user.id)
-      .delete(pair)
+      .delete()
       .then(res => {
         console.log(res.data);
         this.setState({ user: { favorites: [...this.state.user.favorites] } })
