@@ -36,15 +36,13 @@ class Favorites extends Component {
       .catch(err => {
         console.log(err);
       })
-
   }
-
 
   render() {
     // console.log(this.state.temp2)
-    console.log(this.props.favorites);
+    console.log('%cthis.props.favorites: ', 'color:red;font-size:16px;', this.props.favorites);
     return (
-      <div class={'favorites'}>
+      <div className='favorites'>
         <div>
           {
             this.props.favorites.map((favorite, index) => {

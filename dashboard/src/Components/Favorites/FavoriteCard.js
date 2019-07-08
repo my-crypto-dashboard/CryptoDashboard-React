@@ -17,7 +17,7 @@ class FavoriteCard extends Component {
   }
 
   render() {
-
+    console.log(this.props.favorite, 'this.props.favorite');
     return (
       <div className={'card-1'}>
         <button onClick={() => this.props.remove(this.props.favorite)}>Remove Favorite</button>

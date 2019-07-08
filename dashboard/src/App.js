@@ -44,7 +44,7 @@ class App extends Component {
       .doc(this.state.user.id)
       .update({ favorites: firebase.firestore.FieldValue.arrayUnion(pair) })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         this.setState({ user: { favorites: [...this.state.user.favorites, pair] } });
       })
       .catch(err => {
@@ -53,17 +53,19 @@ class App extends Component {
   }
 
   async removeFavorite(pair) {
+    console.log('%cCrypto Pair in removeFavorite', 'color:green;font-size:16px', pair);
     let db = await fire.firestore();
     await db.collection("users")
       .doc(this.state.user.id)
       .update({
-        "favorites":
-          firebase.firestore.FieldValue.arrayRemove(pair)
+        favorites: firebase.firestore.FieldValue.arrayRemove(pair)
+        // firebase.firestore.arrayRemove(pair)
       })
       .then(res => {
-        this.setState({ user: { favorites: [...this.state.user.favorites] } })
+        console.log('delete favorite: ', res.data);
+        // this.setState({ user: { favorites: [...this.state.user.favorites] } })
       })
-      .catch(err => console.log(err.message));
+      .catch(err => console.log(err));
   }
 
 
@@ -140,6 +142,7 @@ class App extends Component {
 
 
   render() {
+    console.log(this.state.user);
     return (
 
       <div className="App">

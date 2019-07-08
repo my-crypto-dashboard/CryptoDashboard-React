@@ -87,13 +87,13 @@ class Dashboard extends React.Component {
 
     displayCryptoRight = async (rightcoin) => {
         console.log('displayCryptoRight triggered');
-        console.log('right coin', rightcoin);
+        // console.log('right coin', rightcoin);
         await this.setState({ rightcoin: null });
-        console.log(this.state);
+        // console.log(this.state);
         let coinData = null;
         await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${rightcoin.id}&vs_currencies=usd`)
             .then(res => {
-                console.log(res);
+                // console.log(res);
                 this.setState({ rightcoinUSD: res.data, rightcoin: rightcoin })
                 coinData = res.data[rightcoin.id];
             })
@@ -103,11 +103,11 @@ class Dashboard extends React.Component {
         //     this.showCryptoPair(coin, this.state.leftcoin);
         // }
 
-        console.log('leftcoin and rightcoin in displayCryptoRight', this.state.leftcoin, rightcoin);
+        // console.log('leftcoin and rightcoin in displayCryptoRight', this.state.leftcoin, rightcoin);
 
         if (this.state.leftcoin) {
-            console.log(coinData);
-            console.log(this.state.leftcoin)
+            // console.log(coinData);
+            // console.log(this.state.leftcoin)
             this.currencyConverter(this.state.leftcoinUSD[this.state.leftcoin.id], coinData)
         }
     }
@@ -122,8 +122,8 @@ class Dashboard extends React.Component {
         const leftCoinFound = this.state.coins.filter(coin => coin.symbol === leftCoinInput)[0];
         const rightCoinFound = this.state.coins.filter(coin => coin.symbol === rightCoinInput)[0];
 
-        console.log('leftCoinFound', leftCoinFound);
-        console.log('rightCoinFound', rightCoinFound);
+        // console.log('leftCoinFound', leftCoinFound);
+        // console.log('rightCoinFound', rightCoinFound);
 
         if (leftCoinFound) {
             await this.setState({ leftcoin: leftCoinFound })
@@ -143,7 +143,7 @@ class Dashboard extends React.Component {
 
 
     showCryptoPair = (leftcoin, rightcoin) => {
-        console.log('showcryptopair fired', leftcoin, rightcoin);
+        console.log('showcryptopair fired');
 
         axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${leftcoin.id}&vs_currencies=${rightcoin.symbol}`)
             .then(res => {
@@ -249,9 +249,7 @@ class Dashboard extends React.Component {
                             {/* {this.state.coins.map((coin, i) => <div key={i} className="right-coin" onClick={() => this.displayCryptoRight(coin)}>{coin.symbol}</div>)} */}
                             {/* <Coin coins={this.state.coins} display={this.displayCryptoRight} /> */}
                         </div>
-
                     </div>
-
                 </main>
             </>
         )
