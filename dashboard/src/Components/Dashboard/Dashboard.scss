@@ -88,7 +88,8 @@ main {
 
 .coins {
     display: flex;
-    
+   
+    position: relative;
     // flex-wrap: wrap;
     flex-direction: row;
     color: #6049e6;
@@ -110,7 +111,17 @@ main {
     .rightCoins.dropdown {
         .dropdown-content {
             position : absolute;
-            right : 0px;
+            right : 160px;
+            top: 63px;
+        }
+    }
+
+
+    .leftCoins.dropdown {
+        .dropdown-content {
+            position : absolute;
+            left : 265px;
+            top: 63px;
         }
     }
 
@@ -130,6 +141,7 @@ main {
         .dropdown-content {
             // border: 1px solid red;
             // display : none;
+
             visibility: hidden;
             opacity: 0;
             margin-right: 105px;
@@ -154,7 +166,8 @@ main {
             }
         }
 
-        &:hover .dropdown-content {
+        // &:hover .dropdown-content {
+            &:hover .dropdown-content {
             // display: block;
             visibility : visible;
            
