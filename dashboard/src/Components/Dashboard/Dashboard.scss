@@ -9,6 +9,12 @@ main {
     width: 100%;
 }
 
+.coin {
+    background: $react-blue2;
+    padding: 1rem 1rem;
+    width: 5rem;
+}
+
 .forms {
     display: flex;
     justify-content: space-between;
@@ -16,14 +22,15 @@ main {
     align-items : center;
 
     input {
+        border-radius: 5px;
         margin: 10px;
-        height: 75px;
+        height: 30px;
         width: 45%;
         text-align : center;
         font-size: 20px;
         border: 1px solid $react-blue2;
         background-color: $react-blue;
-        color : $whiteColor;
+        color : #6049e6;
         padding: 20px;
     }
 
@@ -37,7 +44,6 @@ main {
         padding : 20px;
         // background-color : $react-blue2;
         color : $navlinkColor;
-        font-weight: bolder;
         font-size : 30px;
         margin: 20px;
 
@@ -49,16 +55,14 @@ main {
             align-self : center;
             cursor : pointer;
         }
-
-
     }
-
 }
 
 .data {
     display: flex;
-    justify-content: space-between;
-    border: 5px solid $react-blue2;
+    border-radius: 5px;
+    justify-content: space-around;
+    border: 1px solid $navlinkColor;
     width: 90%;
     padding: 10px;
     margin: 0 auto;
@@ -67,8 +71,9 @@ main {
     text-align: center;
 
     div {
+        border-radius: 5px;
         color : $navlinkColor;
-        font-weight: bolder;
+        
         font-size : 30px;
     }
 
@@ -83,9 +88,11 @@ main {
 
 .coins {
     display: flex;
+    
     // flex-wrap: wrap;
     flex-direction: row;
-    justify-content : space-between;
+    color: #6049e6;
+    justify-content : space-around;
 
     // border: 1px solid green;
     // @include on-circle(5046, 20rem, 6rem);
@@ -95,6 +102,7 @@ main {
         flex-direction: column;
         // border: 1px solid green;
         padding: 5px;
+        padding-left: 35px;
         margin: 5px;
         align-self: center;
     }
@@ -124,34 +132,40 @@ main {
             // display : none;
             visibility: hidden;
             opacity: 0;
+            margin-right: 105px;
+            max-height: 100vh;
+            overflow: scroll;
             transition: visibility 1s, opacity 1s linear;
-            position : absolute;
-            background-color : #f9f9f9;
+            position : relative;
+            background-color: black;
             // min-width: 160px;
+            border: 1px solid $navlinkColor;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1;
 
             div {
                 // color : red;
-                padding: 12px 16px;
+                padding: 6px 8px;
                 text-decoration: none;
                 display: block;
-                background-color : $react-blue2;
+                background-color : black;
+                color: $navlinkColor;
+
             }
         }
 
         &:hover .dropdown-content {
             // display: block;
             visibility : visible;
+           
             opacity: 1;
-            border : 5px solid $react-blue;
         }
 
         &:hover .dropbtn {
             // background-color: $react-blue2;
             // color : $react-blue;
             transition : .5s;
-            box-shadow: 0 1px 4px #57b7bd, 0 1px 1px #6049e6;
+            box-shadow: 0 1px 1px #57b7bd, 0 1px 1px #6049e6;
             cursor: context-menu;
         }
 
